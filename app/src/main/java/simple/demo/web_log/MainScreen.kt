@@ -52,7 +52,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
                     )
                 }
                 Button(onClick = {
-
+                    WebLog.debug("123")
                 }) {
                     Text(
                         text = "end"
