@@ -6,7 +6,9 @@ import org.java_websocket.server.WebSocketServer
 import java.lang.Exception
 import java.net.InetSocketAddress
 
-class AndroidWebSocketServer : WebSocketServer(InetSocketAddress(8080)) {
+class AndroidWebSocketServer(
+    port: Int
+) : WebSocketServer(InetSocketAddress(port)) {
 
     override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
         LogHelper.debug("onOpen")

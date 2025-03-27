@@ -4,8 +4,8 @@ object WebLog {
 
     private var server: AndroidWebSocketServer? = null
 
-    fun start() {
-        server = AndroidWebSocketServer()
+    fun start(port: Int) {
+        server = AndroidWebSocketServer(port)
         server?.start()
     }
 
