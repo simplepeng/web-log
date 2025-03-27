@@ -1,11 +1,38 @@
 package simple.library.weblog
 
+import org.java_websocket.WebSocket
+import org.java_websocket.handshake.ClientHandshake
+import java.lang.Exception
+
 object WebLog {
 
     private var server: AndroidWebSocketServer? = null
 
-    fun start(port: Int) {
-        server = AndroidWebSocketServer(port)
+    fun start(
+        port: Int,
+        listener: DelegateListener? = null
+    ) {
+        server = object : AndroidWebSocketServer(port) {
+            override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
+                listener?.onOpen()
+            }
+
+            override fun onClose(conn: WebSocket?, code: Int, reason: String?, remote: Boolean) {
+                listener?.onClose(code, reason, remote)
+            }
+
+            override fun onMessage(conn: WebSocket?, message: String?) {
+                listener?.onMessage(message)
+            }
+
+            override fun onError(conn: WebSocket?, ex: Exception?) {
+                listener?.onError(ex)
+            }
+
+            override fun onStart() {
+                listener?.onStart()
+            }
+        }
         server?.start()
     }
 

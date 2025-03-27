@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -20,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import simple.library.weblog.DelegateListener
 import simple.library.weblog.WebLog
 import simple.library.weblog.WebLogHelper
 
@@ -27,11 +31,13 @@ import simple.library.weblog.WebLogHelper
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
+    viewModel: MainViewModel = MainViewModel(),
     ip: String = ""
 ) {
 
     var port by remember { mutableStateOf("8080") }
     val tag = remember { "MainScreen" }
+    val messageList by viewModel.messageList.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = modifier
@@ -70,7 +76,27 @@ fun MainScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Button(onClick = {
-                    WebLog.start(port.toInt())
+                    WebLog.start(port.toInt(), object : DelegateListener {
+                        override fun onOpen() {
+                            viewModel.addMessage("WebSocket服务启动")
+                        }
+
+                        override fun onClose(code: Int, reason: String?, remote: Boolean) {
+                            viewModel.addMessage("WebSocket服务关闭")
+                        }
+
+                        override fun onMessage(message: String?) {
+                            viewModel.addMessage("收到消息")
+                        }
+
+                        override fun onError(ex: Exception?) {
+                            viewModel.addMessage("发生异常 -- ${ex?.message}")
+                        }
+
+                        override fun onStart() {
+                            viewModel.addMessage("WebSocket服务启动成功")
+                        }
+                    })
                 }) {
                     Text(
                         text = "start"
@@ -90,28 +116,36 @@ fun MainScreen(
                 horizontalArrangement = Arrangement.spacedBy(5.dp)
             ) {
                 Button(onClick = {
-                    WebLog.d(tag, message = "发送了一条debug日志")
+                    val message = "发送了一条debug日志"
+                    WebLog.d(tag, message)
+                    viewModel.addMessage(message)
                 }) {
                     Text(
                         text = "debug"
                     )
                 }
                 Button(onClick = {
-                    WebLog.i(tag, message = "发送了一条info日志")
+                    val message = "发送了一条info日志"
+                    WebLog.i(tag, message)
+                    viewModel.addMessage(message)
                 }) {
                     Text(
                         text = "info"
                     )
                 }
                 Button(onClick = {
-                    WebLog.w(tag, message = "发送了一条warn日志")
+                    val message = "发送了一条warn日志"
+                    WebLog.w(tag, message)
+                    viewModel.addMessage(message)
                 }) {
                     Text(
                         text = "warn"
                     )
                 }
                 Button(onClick = {
-                    WebLog.e(tag, message = "发送了一条error日志")
+                    val message = "发送了一条error日志"
+                    WebLog.e(tag, message)
+                    viewModel.addMessage(message)
                 }) {
                     Text(
                         text = "error"
@@ -119,6 +153,18 @@ fun MainScreen(
                 }
             }
             //
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .padding(10.dp)
+            ) {
+                items(messageList) {
+                    Text(
+                        text = it
+                    )
+                }
+            }
         }
     }
 }
