@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
@@ -14,7 +13,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -27,17 +25,19 @@ import simple.library.weblog.WebLogHelper
 
 @Preview
 @Composable
-fun MainScreen(modifier: Modifier = Modifier) {
-    val context = LocalContext.current
+fun MainScreen(
+    modifier: Modifier = Modifier,
+    ip: String = ""
+) {
 
-    var ip by remember { mutableStateOf(WebLogHelper.getIpAddress(context)) }
     var port by remember { mutableStateOf("8080") }
+    val tag = remember { "MainScreen" }
 
     Scaffold(
         modifier = modifier
     ) { innerPadding ->
         Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(5.dp),
             modifier = modifier
                 .fillMaxSize()
                 .padding(innerPadding)
@@ -49,7 +49,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
             ) {
                 OutlinedTextField(
                     value = ip,
-                    onValueChange = { ip = it },
+                    onValueChange = { },
                     readOnly = true,
                     modifier = Modifier.wrapContentWidth(),
                     label = {
@@ -64,9 +64,9 @@ fun MainScreen(modifier: Modifier = Modifier) {
                     },
                 )
             }
-
+            //
             Row(
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                horizontalArrangement = Arrangement.spacedBy(5.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Button(onClick = {
@@ -77,13 +77,48 @@ fun MainScreen(modifier: Modifier = Modifier) {
                     )
                 }
                 Button(onClick = {
-                    WebLog.debug("123")
+                    WebLog.stop()
                 }) {
                     Text(
                         text = "stop"
                     )
                 }
             }
+            //
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(5.dp)
+            ) {
+                Button(onClick = {
+                    WebLog.d(tag, message = "发送了一条debug日志")
+                }) {
+                    Text(
+                        text = "debug"
+                    )
+                }
+                Button(onClick = {
+                    WebLog.i(tag, message = "发送了一条info日志")
+                }) {
+                    Text(
+                        text = "info"
+                    )
+                }
+                Button(onClick = {
+                    WebLog.w(tag, message = "发送了一条warn日志")
+                }) {
+                    Text(
+                        text = "warn"
+                    )
+                }
+                Button(onClick = {
+                    WebLog.e(tag, message = "发送了一条error日志")
+                }) {
+                    Text(
+                        text = "error"
+                    )
+                }
+            }
+            //
         }
     }
 }
