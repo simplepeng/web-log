@@ -40,6 +40,12 @@ object WebLog {
         server?.stop()
     }
 
+    fun broadcast(
+        message: String
+    ) {
+        v("WebLog", message)
+    }
+
     fun v(
         tag: String,
         message: String

@@ -78,7 +78,8 @@ fun MainScreen(
                 Button(onClick = {
                     WebLog.start(port.toInt(), object : DelegateListener {
                         override fun onOpen() {
-                            viewModel.addMessage("WebSocket服务启动")
+                            viewModel.addMessage("客户端连接成功")
+                            WebLog.broadcast("服务端连接成功")
                         }
 
                         override fun onClose(code: Int, reason: String?, remote: Boolean) {
@@ -107,6 +108,13 @@ fun MainScreen(
                 }) {
                     Text(
                         text = "stop"
+                    )
+                }
+                Button(onClick = {
+                    WebLog.stop()
+                }) {
+                    Text(
+                        text = "clear"
                     )
                 }
             }
