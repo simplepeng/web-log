@@ -12,4 +12,8 @@ class MainViewModel : ViewModel() {
     fun addMessage(message: String) {
         _messageList.value = _messageList.value + message
     }
+
+    fun clear(){
+        _messageList.value = emptyList()
+    }
 }

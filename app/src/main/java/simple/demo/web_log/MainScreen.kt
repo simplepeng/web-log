@@ -111,7 +111,7 @@ fun MainScreen(
                     )
                 }
                 Button(onClick = {
-                    WebLog.stop()
+                    viewModel.clear()
                 }) {
                     Text(
                         text = "clear"
