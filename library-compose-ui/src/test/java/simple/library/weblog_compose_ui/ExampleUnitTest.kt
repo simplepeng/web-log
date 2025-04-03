@@ -1,4 +1,4 @@
-package simple.library.weblog
+package simple.library.weblog_compose_ui
 
 import org.junit.Test
 

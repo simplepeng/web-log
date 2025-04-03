@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "simple.library.weblog"
+    namespace = "simple.library.weblog_compose_ui"
     compileSdk = 35
 
     defaultConfig {
@@ -29,14 +29,11 @@ android {
     }
 }
 
-//noinspection UseTomlInstead
 dependencies {
-//    implementation(libs.androidx.core.ktx)
-//    implementation(libs.androidx.appcompat)
-//    implementation(libs.material)
-//    testImplementation(libs.junit)
-//    androidTestImplementation(libs.androidx.junit)
-//    androidTestImplementation(libs.androidx.espresso.core)
-    //
-    implementation("org.java-websocket:Java-WebSocket:1.6.0")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }

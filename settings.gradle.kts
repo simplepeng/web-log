@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "web-log"
 include(":app")
 include(":library")
+include(":library-compose-ui")

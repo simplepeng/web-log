@@ -1,4 +1,4 @@
-package simple.demo.web_log
+package simple.library.weblog_compose_ui
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
