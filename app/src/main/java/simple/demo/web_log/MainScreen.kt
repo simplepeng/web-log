@@ -5,39 +5,58 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.ViewModelInitializer
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.viewModelFactory
 import simple.library.weblog.DelegateListener
+import simple.library.weblog.Message
 import simple.library.weblog.WebLog
 import simple.library.weblog.WebLogHelper
+import kotlin.math.absoluteValue
 
-@Preview
+//@Preview
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    viewModel: MainViewModel = MainViewModel(),
-    ip: String = ""
+    viewModel: MainViewModel = viewModel(),
 ) {
 
+    val context = LocalContext.current
+    val ip by remember { mutableStateOf(WebLogHelper.getIpAddress(context)) }
     var port by remember { mutableStateOf("8080") }
-    val tag = remember { "MainScreen" }
-    val messageList by viewModel.messageList.collectAsStateWithLifecycle()
+    val tag = remember { "Test" }
+
+    val messageList by viewModel.messageList.collectAsState()
+    val listState = rememberLazyListState()
+
+    LaunchedEffect(messageList) {
+        if (messageList.isNotEmpty()) {
+            listState.scrollToItem(messageList.size - 1)
+        }
+    }
 
     Scaffold(
         modifier = modifier
@@ -83,7 +102,7 @@ fun MainScreen(
                         }
 
                         override fun onClose(code: Int, reason: String?, remote: Boolean) {
-                            viewModel.addMessage("WebSocket服务关闭")
+                            viewModel.addMessage("WebSocket服务关闭 $reason -- $remote")
                         }
 
                         override fun onMessage(message: String?) {
@@ -127,6 +146,7 @@ fun MainScreen(
                     val message = "发送了一条debug日志"
                     WebLog.d(tag, message)
                     viewModel.addMessage(message)
+//                    messageList.add(message)
                 }) {
                     Text(
                         text = "debug"
@@ -162,15 +182,24 @@ fun MainScreen(
             }
             //
             LazyColumn(
+                state = listState,
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+                reverseLayout = false,
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
                     .padding(10.dp)
             ) {
                 items(messageList) {
-                    Text(
-                        text = it
-                    )
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            text = it,
+                            modifier = Modifier.padding(10.dp)
+                        )
+                    }
                 }
             }
         }

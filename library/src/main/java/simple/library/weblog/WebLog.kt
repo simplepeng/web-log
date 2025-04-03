@@ -51,8 +51,8 @@ object WebLog {
         message: String
     ) {
         server?.broadcast(
-            MessageModel(
-                level = MessageModel.LEVEL_VERBOSE,
+            Message(
+                level = Message.LEVEL_VERBOSE,
                 tag = tag,
                 message = message
             ).toJson()
@@ -64,8 +64,8 @@ object WebLog {
         message: String
     ) {
         server?.broadcast(
-            MessageModel(
-                level = MessageModel.LEVEL_DEBUG,
+            Message(
+                level = Message.LEVEL_DEBUG,
                 tag = tag,
                 message = message
             ).toJson()
@@ -77,8 +77,8 @@ object WebLog {
         message: String
     ) {
         server?.broadcast(
-            MessageModel(
-                level = MessageModel.LEVEL_INFO,
+            Message(
+                level = Message.LEVEL_INFO,
                 tag = tag,
                 message = message
             ).toJson()
@@ -90,8 +90,8 @@ object WebLog {
         message: String
     ) {
         server?.broadcast(
-            MessageModel(
-                level = MessageModel.LEVEL_WARN,
+            Message(
+                level = Message.LEVEL_WARN,
                 tag = tag,
                 message = message
             ).toJson()
@@ -103,8 +103,8 @@ object WebLog {
         message: String
     ) {
         server?.broadcast(
-            MessageModel(
-                level = MessageModel.LEVEL_ERROR,
+            Message(
+                level = Message.LEVEL_ERROR,
                 tag = tag,
                 message = message
             ).toJson()

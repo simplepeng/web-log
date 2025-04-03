@@ -10,7 +10,7 @@ class MainViewModel : ViewModel() {
     val messageList = _messageList.asStateFlow()
 
     fun addMessage(message: String) {
-        _messageList.value = _messageList.value + message
+        _messageList.value += message
     }
 
     fun clear(){
