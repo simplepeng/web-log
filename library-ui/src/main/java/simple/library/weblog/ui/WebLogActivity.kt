@@ -5,8 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 
-class WebLogActivity : ComponentActivity() {
+class WebLogActivity : AppCompatActivity() {
 
     companion object {
         fun start(context: Context) {
@@ -20,5 +22,7 @@ class WebLogActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_web_log)
     }
 }

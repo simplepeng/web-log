@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import simple.library.weblog.ui.WebLogPage
 
-class MainViewModel(val application: Application) : AndroidViewModel(application) {
+class MainViewModel(private val application: Application) : AndroidViewModel(application) {
 
     fun postAction(action: MainAction) {
         when (action) {

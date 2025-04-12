@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,7 +23,8 @@ fun MainScreen(
     FlowRow(
         modifier = Modifier
             .fillMaxSize()
-            .padding(10.dp),
+            .safeContentPadding()
+            .padding(start = 10.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         Button(onClick = {

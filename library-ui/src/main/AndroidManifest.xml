@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application>
-        <activity android:name=".WebLogActivity" />
+        <activity
+            android:name=".WebLogActivity"
+            android:theme="@style/Theme.Material3.DynamicColors.Light.NoActionBar" />
     </application>
 </manifest>
