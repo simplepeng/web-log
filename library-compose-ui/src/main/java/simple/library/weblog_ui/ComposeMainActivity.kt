@@ -1,19 +1,16 @@
-package simple.demo.web_log
+package simple.library.weblog_ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import simple.demo.web_log.ui.theme.WeblogTheme
+import androidx.compose.material3.MaterialTheme
 
-class MainActivity : ComponentActivity() {
+class ComposeMainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-
         setContent {
-            WeblogTheme {
+            MaterialTheme {
                 MainScreen()
             }
         }

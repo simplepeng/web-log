@@ -3,7 +3,7 @@ package simple.library.weblog
 import android.content.Context
 import android.net.wifi.WifiManager
 
-object WebLogHelper {
+internal object WebLogHelper {
 
     fun getIpAddress(context: Context): String {
         val wifiManager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager

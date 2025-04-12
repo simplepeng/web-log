@@ -2,7 +2,7 @@ package simple.library.weblog
 
 import org.json.JSONObject
 
-data class Message(
+internal data class Message(
     val time: Long = System.currentTimeMillis(),
     val level: Int,
     //
