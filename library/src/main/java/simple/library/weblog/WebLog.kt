@@ -2,15 +2,17 @@ package simple.library.weblog
 
 import org.java_websocket.WebSocket
 import org.java_websocket.handshake.ClientHandshake
+import simple.library.weblog.base.DelegateListener
+import simple.library.weblog.base.IWebLog
 import java.lang.Exception
 
-object WebLog {
+object WebLog : IWebLog {
 
     private var server: AndroidWebSocketServer? = null
 
-    fun start(
+    override fun start(
         port: Int,
-        listener: DelegateListener? = null
+        listener: DelegateListener?
     ) {
         server = object : AndroidWebSocketServer(port) {
             override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
@@ -36,17 +38,18 @@ object WebLog {
         server?.start()
     }
 
-    fun stop() {
+    override fun stop() {
         server?.stop()
     }
 
-    fun broadcast(
+    override fun broadcast(
+        tag: String,
         message: String
     ) {
-        v("WebLog", message)
+        v(tag, message)
     }
 
-    fun v(
+    override fun v(
         tag: String,
         message: String
     ) {
@@ -59,7 +62,7 @@ object WebLog {
         )
     }
 
-    fun d(
+    override fun d(
         tag: String,
         message: String
     ) {
@@ -72,7 +75,7 @@ object WebLog {
         )
     }
 
-    fun i(
+    override fun i(
         tag: String,
         message: String
     ) {
@@ -85,7 +88,7 @@ object WebLog {
         )
     }
 
-    fun w(
+    override fun w(
         tag: String,
         message: String
     ) {
@@ -98,7 +101,7 @@ object WebLog {
         )
     }
 
-    fun e(
+    override fun e(
         tag: String,
         message: String
     ) {

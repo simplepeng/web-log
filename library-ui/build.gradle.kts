@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "simple.library.weblog_ui"
+    namespace = "simple.library.weblog.ui"
     compileSdk = 35
 
     defaultConfig {
@@ -33,9 +33,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     //
     implementation(project(":library"))
 }
