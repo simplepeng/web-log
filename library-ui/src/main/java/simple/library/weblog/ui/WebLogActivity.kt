@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import simple.library.weblog.WebLog
 import simple.library.weblog.base.WebLogHelper
 
 internal class WebLogActivity : AppCompatActivity() {
@@ -30,13 +31,21 @@ internal class WebLogActivity : AppCompatActivity() {
     private val toolbar by lazy { findViewById<MaterialToolbar>(R.id.toolbar) }
     private val etIp by lazy { findViewById<TextInputEditText>(R.id.etIp) }
     private val etPort by lazy { findViewById<TextInputEditText>(R.id.etPort) }
+
     private val btnStart by lazy { findViewById<MaterialButton>(R.id.btnStart) }
     private val btnStop by lazy { findViewById<MaterialButton>(R.id.btnStop) }
     private val btnClear by lazy { findViewById<MaterialButton>(R.id.btnClear) }
-    private val recyclerView by lazy { findViewById<RecyclerView>(R.id.recyclerView) }
 
+    private val btnDebug by lazy { findViewById<MaterialButton>(R.id.btnDebug) }
+    private val btnInfo by lazy { findViewById<MaterialButton>(R.id.btnInfo) }
+    private val btnWarn by lazy { findViewById<MaterialButton>(R.id.btnWarn) }
+    private val btnError by lazy { findViewById<MaterialButton>(R.id.btnError) }
+
+    private val recyclerView by lazy { findViewById<RecyclerView>(R.id.recyclerView) }
     private val viewModel: WebLogViewModel by lazy { ViewModelProvider(this)[WebLogViewModel::class.java] }
     private val messageAdapter: MessageAdapter by lazy { MessageAdapter(viewModel.messageList) }
+
+    private val tag = "Test"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +64,7 @@ internal class WebLogActivity : AppCompatActivity() {
 
         viewModel.addMessageLiveData.observe(this) { position ->
             messageAdapter.notifyItemInserted(position)
+            recyclerView.smoothScrollToPosition(position)
         }
         viewModel.clearMessageLiveData.observe(this) {
             messageAdapter.notifyDataSetChanged()
@@ -73,6 +83,26 @@ internal class WebLogActivity : AppCompatActivity() {
         }
         btnClear.setOnClickListener {
             clear()
+        }
+        btnDebug.setOnClickListener {
+            val message = "发送了一条debug日志"
+            WebLog.d(tag, message)
+            viewModel.addMessage(message)
+        }
+        btnInfo.setOnClickListener {
+            val message = "发送了一条info日志"
+            WebLog.i(tag, message)
+            viewModel.addMessage(message)
+        }
+        btnWarn.setOnClickListener {
+            val message = "发送了一条warn日志"
+            WebLog.w(tag, message)
+            viewModel.addMessage(message)
+        }
+        btnError.setOnClickListener {
+            val message = "发送了一条error日志"
+            WebLog.e(tag, message)
+            viewModel.addMessage(message)
         }
     }
 

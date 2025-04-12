@@ -44,13 +44,11 @@ internal class WebLogViewModel : ViewModel() {
     @SuppressLint("NotifyDataSetChanged")
     fun clear() {
         messageList.clear()
-//        messageAdapter.notifyDataSetChanged()
         clearMessageLiveData.postValue(Unit)
     }
 
     fun addMessage(message: String) {
         messageList.add(message)
-//        messageAdapter.notifyItemInserted(messageList.size - 1)
         addMessageLiveData.postValue(messageList.size - 1)
     }
 }
