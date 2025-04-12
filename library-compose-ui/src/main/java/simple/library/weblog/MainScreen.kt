@@ -26,8 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import simple.library.weblog.DelegateListener
-import simple.library.weblog.WebLogHelper
+import simple.library.weblog.base.DelegateListener
 
 //@Preview
 @Composable
@@ -37,7 +36,7 @@ fun MainScreen(
 ) {
 
     val context = LocalContext.current
-    val ip by remember { mutableStateOf(WebLogHelper.getIpAddress(context)) }
+    var ip by remember { mutableStateOf("") }
     var port by remember { mutableStateOf("8080") }
     val tag = remember { "Test" }
 

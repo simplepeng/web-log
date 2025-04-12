@@ -13,8 +13,6 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/library-base" />
-            <option value="$PROJECT_DIR$/library-compose-ui" />
-            <option value="$PROJECT_DIR$/library-compose-ui-no-op" />
             <option value="$PROJECT_DIR$/library-no-op" />
             <option value="$PROJECT_DIR$/library-ui" />
             <option value="$PROJECT_DIR$/library-ui-no-op" />

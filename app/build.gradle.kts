@@ -36,6 +36,7 @@ android {
     }
 }
 
+//noinspection UseTomlInstead
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -55,4 +56,8 @@ dependencies {
     //
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
     implementation(project(":library"))
+    //
+    debugImplementation(project(":library-ui"))
+    releaseImplementation(project(":library-ui-no-op"))
+    //
 }

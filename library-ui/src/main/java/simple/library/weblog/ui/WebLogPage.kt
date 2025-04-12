@@ -6,6 +6,6 @@ import simple.library.weblog.base.IWebLogPage
 object WebLogPage : IWebLogPage{
 
     override fun open(context: Context) {
-
+        WebLogActivity.start(context)
     }
 }
