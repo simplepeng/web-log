@@ -36,5 +36,5 @@ dependencies {
     implementation(libs.material)
     implementation("androidx.recyclerview:recyclerview:1.4.0")
     //
-    implementation(project(":library"))
+    api(project(":library"))
 }
