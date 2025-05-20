@@ -61,12 +61,14 @@
 
         <Button
             android:id="@+id/btnStart"
+            style="@style/WebLogButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="start" />
 
         <Button
             android:id="@+id/btnStop"
+            style="@style/WebLogButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/padding_horizontal"
@@ -74,6 +76,7 @@
 
         <Button
             android:id="@+id/btnClear"
+            style="@style/WebLogButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/padding_horizontal"
@@ -88,12 +91,14 @@
 
         <Button
             android:id="@+id/btnDebug"
+            style="@style/WebLogButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="debug" />
 
         <Button
             android:id="@+id/btnInfo"
+            style="@style/WebLogButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/padding_horizontal"
@@ -101,6 +106,7 @@
 
         <Button
             android:id="@+id/btnWarn"
+            style="@style/WebLogButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/padding_horizontal"
@@ -108,6 +114,7 @@
 
         <Button
             android:id="@+id/btnError"
+            style="@style/WebLogButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/padding_horizontal"
