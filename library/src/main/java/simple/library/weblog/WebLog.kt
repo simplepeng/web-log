@@ -10,36 +10,55 @@ object WebLog : IWebLog {
 
     private var server: AndroidWebSocketServer? = null
 
+    val isStarted: Boolean
+        get() = server != null
+
+    private val listeners = mutableListOf<DelegateListener>()
+
+    override fun addListener(listener: DelegateListener) {
+        listeners.add(listener)
+    }
+
+    override fun removeListener(listener: DelegateListener) {
+        listeners.remove(listener)
+    }
+
     override fun start(
         port: Int,
-        listener: DelegateListener?
     ) {
+        if (isStarted) {
+            return
+        }
+
         server = object : AndroidWebSocketServer(port) {
             override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
-                listener?.onOpen()
+                listeners.forEach { it.onOpen() }
             }
 
             override fun onClose(conn: WebSocket?, code: Int, reason: String?, remote: Boolean) {
-                listener?.onClose(code, reason, remote)
+                listeners.forEach { it.onClose(code, reason, remote) }
             }
 
             override fun onMessage(conn: WebSocket?, message: String?) {
-                listener?.onMessage(message)
+                listeners.forEach { it.onMessage(message) }
             }
 
             override fun onError(conn: WebSocket?, ex: Exception?) {
-                listener?.onError(ex)
+                listeners.forEach { it.onError(ex) }
             }
 
             override fun onStart() {
-                listener?.onStart()
+                listeners.forEach { it.onStart() }
             }
         }
+
         server?.start()
     }
 
     override fun stop() {
         server?.stop()
+        server = null
+        listeners.clear()
     }
 
     override fun broadcast(

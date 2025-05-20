@@ -5,8 +5,10 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.postDelayed
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -54,11 +56,14 @@ internal class WebLogActivity : AppCompatActivity() {
 
         initView()
         initListener()
+        initData()
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun initView() {
         etIp.setText(WebLogHelper.getIpAddress(this))
+        etPort.setText(viewModel.defaultPort.toString())
+
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = messageAdapter
 
@@ -103,6 +108,14 @@ internal class WebLogActivity : AppCompatActivity() {
             val message = "发送了一条error日志"
             WebLog.e(tag, message)
             viewModel.addMessage(message)
+        }
+    }
+
+    private fun initData() {
+        if (WebLog.isStarted) {
+            recyclerView.post {
+                viewModel.addMessage("服务正在运行中...")
+            }
         }
     }
 
