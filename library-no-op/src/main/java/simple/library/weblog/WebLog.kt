@@ -4,7 +4,14 @@ import simple.library.weblog.base.DelegateListener
 import simple.library.weblog.base.IWebLog
 
 object WebLog : IWebLog {
-    override fun start(port: Int, listener: DelegateListener?) {
+
+    override fun addListener(listener: DelegateListener) {
+    }
+
+    override fun removeListener(listener: DelegateListener) {
+    }
+
+    override fun start(port: Int) {
     }
 
     override fun stop() {
