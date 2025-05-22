@@ -1,6 +1,5 @@
 package simple.library.weblog.ui
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import simple.library.weblog.WebLog
@@ -32,7 +31,7 @@ internal class WebLogViewModel : ViewModel() {
             }
 
             override fun onMessage(message: String?) {
-                addMessage("收到消息")
+                addMessage("收到消息 -- $message")
             }
 
             override fun onError(ex: Exception?) {
@@ -51,7 +50,6 @@ internal class WebLogViewModel : ViewModel() {
         addMessage("服务已关闭")
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun clear() {
         messageList.clear()
         clearMessageLiveData.postValue(Unit)
