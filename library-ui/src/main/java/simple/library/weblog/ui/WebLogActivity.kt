@@ -16,6 +16,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import simple.library.weblog.WebLog
+import simple.library.weblog.WebLogConfig
 import simple.library.weblog.base.WebLogHelper
 
 internal class WebLogActivity : AppCompatActivity() {
@@ -62,7 +63,7 @@ internal class WebLogActivity : AppCompatActivity() {
     @SuppressLint("NotifyDataSetChanged")
     private fun initView() {
         etIp.setText(WebLogHelper.getIpAddress(this))
-        etPort.setText(viewModel.defaultPort.toString())
+        etPort.setText(WebLogConfig.port.toString())
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = messageAdapter

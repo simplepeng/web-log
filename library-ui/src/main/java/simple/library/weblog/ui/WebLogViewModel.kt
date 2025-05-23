@@ -12,9 +12,9 @@ internal class WebLogViewModel : ViewModel() {
     val addMessageLiveData = MutableLiveData<Int>()
     val clearMessageLiveData = MutableLiveData<Unit>()
 
-    var defaultPort = 8080
+//    var defaultPort = 8080
 
-    fun start(port: Int = defaultPort) {
+    fun start(port: Int) {
         if (WebLog.isStarted) {
             addMessage("服务正在运行中...")
             return

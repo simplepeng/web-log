@@ -14,6 +14,9 @@ object WebLog : IWebLog {
     override fun start(port: Int) {
     }
 
+    override fun startWithDefaultPort() {
+    }
+
     override fun stop() {
     }
 

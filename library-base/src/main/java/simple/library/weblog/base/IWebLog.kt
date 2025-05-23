@@ -10,6 +10,8 @@ interface IWebLog {
         port: Int
     )
 
+    fun startWithDefaultPort()
+
     fun stop()
 
     fun broadcast(

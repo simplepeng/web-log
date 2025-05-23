@@ -30,6 +30,8 @@ object WebLog : IWebLog {
             return
         }
 
+        WebLogConfig.port = port
+
         server = object : AndroidWebSocketServer(port) {
             override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
                 listeners.forEach { it.onOpen() }
@@ -53,6 +55,10 @@ object WebLog : IWebLog {
         }
 
         server?.start()
+    }
+
+    override fun startWithDefaultPort() {
+        start(port = WebLogConfig.port)
     }
 
     override fun stop() {
