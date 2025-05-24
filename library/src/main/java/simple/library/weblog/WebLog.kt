@@ -23,7 +23,7 @@ object WebLog : IWebLog {
         listeners.remove(listener)
     }
 
-    override fun start(
+    override fun startWithPort(
         port: Int,
     ) {
         if (isStarted) {
@@ -57,8 +57,8 @@ object WebLog : IWebLog {
         server?.start()
     }
 
-    override fun startWithDefaultPort() {
-        start(port = WebLogConfig.port)
+    override fun start() {
+        startWithPort(port = WebLogConfig.port)
     }
 
     override fun stop() {

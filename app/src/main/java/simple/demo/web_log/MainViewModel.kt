@@ -8,7 +8,7 @@ import simple.library.weblog.ui.WebLogPage
 class MainViewModel(private val application: Application) : AndroidViewModel(application) {
 
     init {
-        WebLog.start(8080)
+        WebLog.start()
     }
 
     fun postAction(action: MainAction) {

@@ -11,10 +11,10 @@ object WebLog : IWebLog {
     override fun removeListener(listener: DelegateListener) {
     }
 
-    override fun start(port: Int) {
+    override fun startWithPort(port: Int) {
     }
 
-    override fun startWithDefaultPort() {
+    override fun start() {
     }
 
     override fun stop() {

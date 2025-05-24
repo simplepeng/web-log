@@ -47,6 +47,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPort"
                 android:layout_width="wrap_content"
+                android:inputType="number"
                 android:layout_height="wrap_content"
                 tools:text="8080" />
         </com.google.android.material.textfield.TextInputLayout>
