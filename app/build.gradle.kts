@@ -77,9 +77,10 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
 //    implementation(project(":library"))
     //
-    debugImplementation(project(":library-ui"))
-    releaseImplementation(project(":library-ui-no-op"))
+//    debugImplementation(project(":library-ui"))
+//    releaseImplementation(project(":library-ui-no-op"))
     //
-//    debugImplementation("com.github.simplepeng.web-log:library-ui:0.0.3")
-//    releaseImplementation("com.github.simplepeng.web-log:library-ui-no-op:0.0.3")
+    val webLog = "0.0.5"
+    debugImplementation("com.github.simplepeng.web-log:library-ui:$webLog")
+    releaseImplementation("com.github.simplepeng.web-log:library-ui-no-op:$webLog")
 }
