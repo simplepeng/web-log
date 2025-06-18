@@ -25,5 +25,5 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     //
-    implementation(project(":library-base"))
+    api(project(":library-no-op"))
 }
