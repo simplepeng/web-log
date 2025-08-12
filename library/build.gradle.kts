@@ -23,5 +23,6 @@ android {
 //noinspection UseTomlInstead
 dependencies {
     implementation("org.java-websocket:Java-WebSocket:1.6.0")
+    implementation("com.nanohttpd:nanohttpd-webserver:2.2.0")
     api(project(":library-base"))
 }

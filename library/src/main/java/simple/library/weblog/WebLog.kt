@@ -8,134 +8,140 @@ import java.lang.Exception
 
 object WebLog : IWebLog {
 
-    private var server: AndroidWebSocketServer? = null
+   private var server: AndroidWebSocketServer? = null
 
-    val isStarted: Boolean
-        get() = server != null
+   val isStarted: Boolean
+      get() = server != null
 
-    private val listeners = mutableListOf<DelegateListener>()
+   private val listeners = mutableListOf<DelegateListener>()
 
-    override fun addListener(listener: DelegateListener) {
-        listeners.add(listener)
-    }
+   override fun addListener(listener: DelegateListener) {
+      listeners.add(listener)
+   }
 
-    override fun removeListener(listener: DelegateListener) {
-        listeners.remove(listener)
-    }
+   override fun removeListener(listener: DelegateListener) {
+      listeners.remove(listener)
+   }
 
-    override fun startWithPort(
-        port: Int,
-    ) {
-        if (isStarted) {
-            return
-        }
+   override fun startWithPort(
+      port: Int,
+   ) {
+      if (isStarted) {
+         return
+      }
 
-        WebLogConfig.port = port
+      WebLogConfig.port = port
 
-        server = object : AndroidWebSocketServer(port) {
-            override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
-                listeners.forEach { it.onOpen() }
-            }
+      server = object : AndroidWebSocketServer(port) {
+         override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
+            listeners.forEach { it.onOpen() }
+         }
 
-            override fun onClose(conn: WebSocket?, code: Int, reason: String?, remote: Boolean) {
-                listeners.forEach { it.onClose(code, reason, remote) }
-            }
+         override fun onClose(conn: WebSocket?, code: Int, reason: String?, remote: Boolean) {
+            listeners.forEach { it.onClose(code, reason, remote) }
+         }
 
-            override fun onMessage(conn: WebSocket?, message: String?) {
-                listeners.forEach { it.onMessage(message) }
-            }
+         override fun onMessage(conn: WebSocket?, message: String?) {
+            listeners.forEach { it.onMessage(message) }
+         }
 
-            override fun onError(conn: WebSocket?, ex: Exception?) {
-                listeners.forEach { it.onError(ex) }
-            }
+         override fun onError(conn: WebSocket?, ex: Exception?) {
+            listeners.forEach { it.onError(ex) }
+         }
 
-            override fun onStart() {
-                listeners.forEach { it.onStart() }
-            }
-        }
+         override fun onStart() {
+            listeners.forEach { it.onStart() }
+         }
+      }
 
-        server?.start()
-    }
+      server?.start()
+   }
 
-    override fun start() {
-        startWithPort(port = WebLogConfig.port)
-    }
+   override fun start() {
+//      startWithPort(port = WebLogConfig.port)
+      WebLogInitProvider.applicationContext?.let {
+         AppWebServer(
+            context = it,
+            port = WebLogConfig.port
+         )
+      }
+   }
 
-    override fun stop() {
-        server?.stop()
-        server = null
-        listeners.clear()
-    }
+   override fun stop() {
+      server?.stop()
+      server = null
+      listeners.clear()
+   }
 
-    override fun broadcast(
-        tag: String,
-        message: String
-    ) {
-        v(tag, message)
-    }
+   override fun broadcast(
+      tag: String,
+      message: String
+   ) {
+      v(tag, message)
+   }
 
-    override fun v(
-        tag: String,
-        message: String
-    ) {
-        server?.broadcast(
-            Message(
-                level = Message.LEVEL_VERBOSE,
-                tag = tag,
-                message = message
-            ).toJson()
-        )
-    }
+   override fun v(
+      tag: String,
+      message: String
+   ) {
+      server?.broadcast(
+         Message(
+            level = Message.LEVEL_VERBOSE,
+            tag = tag,
+            message = message
+         ).toJson()
+      )
+   }
 
-    override fun d(
-        tag: String,
-        message: String
-    ) {
-        server?.broadcast(
-            Message(
-                level = Message.LEVEL_DEBUG,
-                tag = tag,
-                message = message
-            ).toJson()
-        )
-    }
+   override fun d(
+      tag: String,
+      message: String
+   ) {
+      server?.broadcast(
+         Message(
+            level = Message.LEVEL_DEBUG,
+            tag = tag,
+            message = message
+         ).toJson()
+      )
+   }
 
-    override fun i(
-        tag: String,
-        message: String
-    ) {
-        server?.broadcast(
-            Message(
-                level = Message.LEVEL_INFO,
-                tag = tag,
-                message = message
-            ).toJson()
-        )
-    }
+   override fun i(
+      tag: String,
+      message: String
+   ) {
+      server?.broadcast(
+         Message(
+            level = Message.LEVEL_INFO,
+            tag = tag,
+            message = message
+         ).toJson()
+      )
+   }
 
-    override fun w(
-        tag: String,
-        message: String
-    ) {
-        server?.broadcast(
-            Message(
-                level = Message.LEVEL_WARN,
-                tag = tag,
-                message = message
-            ).toJson()
-        )
-    }
+   override fun w(
+      tag: String,
+      message: String
+   ) {
+      server?.broadcast(
+         Message(
+            level = Message.LEVEL_WARN,
+            tag = tag,
+            message = message
+         ).toJson()
+      )
+   }
 
-    override fun e(
-        tag: String,
-        message: String
-    ) {
-        server?.broadcast(
-            Message(
-                level = Message.LEVEL_ERROR,
-                tag = tag,
-                message = message
-            ).toJson()
-        )
-    }
+   override fun e(
+      tag: String,
+      message: String
+   ) {
+      server?.broadcast(
+         Message(
+            level = Message.LEVEL_ERROR,
+            tag = tag,
+            message = message
+         ).toJson()
+      )
+   }
 }
