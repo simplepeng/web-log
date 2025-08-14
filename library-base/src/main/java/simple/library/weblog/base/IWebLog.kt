@@ -2,9 +2,9 @@ package simple.library.weblog.base
 
 interface IWebLog {
 
-    fun addListener(listener: DelegateListener)
+    fun addSocketListener(listener: DelegateListener)
 
-    fun removeListener(listener: DelegateListener)
+    fun removeSocketListener(listener: DelegateListener)
 
     fun startServer()
 

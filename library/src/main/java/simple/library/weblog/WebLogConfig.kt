@@ -10,7 +10,7 @@ object WebLogConfig {
     }
 
     private const val DEFAULT_WEB_SERVER_PORT = 8080
-    private const val DEFAULT_SOCKET_SERVER_PORT = 8081
+    private const val DEFAULT_SOCKET_SERVER_PORT = 8080
 
     private const val KEY_HOST_NAME = "key_host_name"
     private const val KEY_SOCKET_SERVER_PORT = "key_socket_server_port"

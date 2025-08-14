@@ -5,10 +5,10 @@ import simple.library.weblog.base.IWebLog
 
 object WebLog : IWebLog {
 
-    override fun addListener(listener: DelegateListener) {
+    override fun addSocketListener(listener: DelegateListener) {
     }
 
-    override fun removeListener(listener: DelegateListener) {
+    override fun removeSocketListener(listener: DelegateListener) {
     }
 
     override fun startSocketServer(port: Int) {

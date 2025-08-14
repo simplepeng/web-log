@@ -11,12 +11,12 @@ import java.lang.Exception
 
 object WebLog : IWebLog {
 
-    private var socketServer: AppWebSocketServer? = null
-
     @SuppressLint("StaticFieldLeak")
     private var webServer: AppWebServer? = null
 
-    val isStarted: Boolean
+    private var socketServer: AppWebSocketServer? = null
+
+    val socketServerIsStarted: Boolean
         get() = socketServer != null
 
     private fun getHostName(
@@ -26,14 +26,14 @@ object WebLog : IWebLog {
         WebLogHelper.getIpAddress(context)
     }
 
-    val listeners = mutableListOf<DelegateListener>()
+    private val socketListeners = mutableListOf<DelegateListener>()
 
-    override fun addListener(listener: DelegateListener) {
-        listeners.add(listener)
+    override fun addSocketListener(listener: DelegateListener) {
+        socketListeners.add(listener)
     }
 
-    override fun removeListener(listener: DelegateListener) {
-        listeners.remove(listener)
+    override fun removeSocketListener(listener: DelegateListener) {
+        socketListeners.remove(listener)
     }
 
     override fun startServer() {
@@ -84,7 +84,7 @@ object WebLog : IWebLog {
         hostName: String,
         port: Int,
     ) {
-        if (isStarted) {
+        if (socketServerIsStarted) {
             return
         }
 
@@ -92,23 +92,23 @@ object WebLog : IWebLog {
 
         socketServer = object : AppWebSocketServer(hostName, port) {
             override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
-                listeners.forEach { it.onOpen() }
+                socketListeners.forEach { it.onOpen() }
             }
 
             override fun onClose(conn: WebSocket?, code: Int, reason: String?, remote: Boolean) {
-                listeners.forEach { it.onClose(code, reason, remote) }
+                socketListeners.forEach { it.onClose(code, reason, remote) }
             }
 
             override fun onMessage(conn: WebSocket?, message: String?) {
-                listeners.forEach { it.onMessage(message) }
+                socketListeners.forEach { it.onMessage(message) }
             }
 
             override fun onError(conn: WebSocket?, ex: Exception?) {
-                listeners.forEach { it.onError(ex) }
+                socketListeners.forEach { it.onError(ex) }
             }
 
             override fun onStart() {
-                listeners.forEach { it.onStart() }
+                socketListeners.forEach { it.onStart() }
             }
         }
 
@@ -118,7 +118,7 @@ object WebLog : IWebLog {
     override fun stopSocketServer() {
         socketServer?.stop()
         socketServer = null
-        listeners.clear()
+        socketListeners.clear()
     }
 
     override fun broadcast(

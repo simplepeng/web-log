@@ -27,12 +27,12 @@ internal class WebLogViewModel : ViewModel() {
         hostName: String,
         port: Int
     ) {
-        if (WebLog.isStarted) {
+        if (WebLog.socketServerIsStarted) {
             addMessage("服务正在运行中...")
             return
         }
 
-        WebLog.addListener(object : DelegateListener {
+        WebLog.addSocketListener(object : DelegateListener {
             override fun onOpen() {
                 addMessage("客户端连接成功")
                 WebLog.v("Server", "服务端连接成功")

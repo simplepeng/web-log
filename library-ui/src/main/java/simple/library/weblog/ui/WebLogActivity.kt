@@ -122,7 +122,7 @@ internal class WebLogActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        if (WebLog.isStarted) {
+        if (WebLog.socketServerIsStarted) {
             recyclerView.post {
                 viewModel.addMessage("服务正在运行中...")
             }
