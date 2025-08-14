@@ -19,30 +19,10 @@
             app:title="WebLog" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_horizontal"
-        android:orientation="horizontal">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="ip">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etIp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_horizontal"
-        android:layout_marginTop="@dimen/margin_top">
+        android:layout_marginHorizontal="@dimen/margin_horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,17 +30,25 @@
             android:layout_margin="@dimen/margin_horizontal"
             android:orientation="vertical">
 
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/TextAppearance.MaterialComponents.Body1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="WebServer" />
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_top"
                 android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:hint="ip">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etIp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="wrap_content"
@@ -75,13 +63,19 @@
                         android:inputType="number"
                         tools:text="8080" />
                 </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btnWebServerStart"
                     style="@style/WebLogButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/padding_horizontal"
                     android:text="start" />
 
                 <Button
@@ -91,67 +85,83 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/padding_horizontal"
                     android:text="stop" />
+
+                <Button
+                    android:id="@+id/btnWebServerOpen"
+                    style="@style/WebLogButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/padding_horizontal"
+                    android:text="Open" />
+
+                <Button
+                    android:id="@+id/btnWebServerCopy"
+                    style="@style/WebLogButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/padding_horizontal"
+                    android:text="Copy" />
             </LinearLayout>
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_horizontal"
-        android:layout_marginTop="@dimen/margin_top">
+    <!--    <com.google.android.material.card.MaterialCardView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginHorizontal="@dimen/margin_horizontal"-->
+    <!--        android:layout_marginTop="@dimen/margin_top">-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_horizontal"
-            android:orientation="vertical">
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_margin="@dimen/margin_horizontal"-->
+    <!--            android:orientation="vertical">-->
 
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/TextAppearance.MaterialComponents.Body1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SocketServer" />
+    <!--            <com.google.android.material.textview.MaterialTextView-->
+    <!--                style="@style/TextAppearance.MaterialComponents.Body1"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="SocketServer" />-->
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_top"
-                android:orientation="horizontal">
+    <!--            <LinearLayout-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="@dimen/margin_top"-->
+    <!--                android:orientation="horizontal">-->
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="port"
-                    android:minWidth="90dp">
+    <!--                <com.google.android.material.textfield.TextInputLayout-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:hint="port"-->
+    <!--                    android:minWidth="90dp">-->
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etSocketServerPort"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        tools:text="8080" />
-                </com.google.android.material.textfield.TextInputLayout>
+    <!--                    <com.google.android.material.textfield.TextInputEditText-->
+    <!--                        android:id="@+id/etSocketServerPort"-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:inputType="number"-->
+    <!--                        tools:text="8080" />-->
+    <!--                </com.google.android.material.textfield.TextInputLayout>-->
 
-                <Button
-                    android:id="@+id/btnSocketServerStart"
-                    style="@style/WebLogButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/padding_horizontal"
-                    android:text="start" />
+    <!--                <Button-->
+    <!--                    android:id="@+id/btnSocketServerStart"-->
+    <!--                    style="@style/WebLogButton"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginStart="@dimen/padding_horizontal"-->
+    <!--                    android:text="start" />-->
 
-                <Button
-                    android:id="@+id/btnSocketServerStop"
-                    style="@style/WebLogButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/padding_horizontal"
-                    android:text="stop" />
-            </LinearLayout>
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+    <!--                <Button-->
+    <!--                    android:id="@+id/btnSocketServerStop"-->
+    <!--                    style="@style/WebLogButton"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginStart="@dimen/padding_horizontal"-->
+    <!--                    android:text="stop" />-->
+    <!--            </LinearLayout>-->
+    <!--        </LinearLayout>-->
+    <!--    </com.google.android.material.card.MaterialCardView>-->
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"

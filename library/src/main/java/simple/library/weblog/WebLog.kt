@@ -85,7 +85,7 @@ object WebLog : IWebLog {
 //            return
 //        }
 
-        WebLogConfig.socketServerPort = port
+//        WebLogConfig.socketServerPort = port
 //
 //        socketServer = object : AppWebSocketServer(hostName, port) {
 //            override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {

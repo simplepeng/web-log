@@ -36,9 +36,9 @@ internal class WebLogActivity : AppCompatActivity() {
     private val btnWebServerStart by lazy { findViewById<MaterialButton>(R.id.btnWebServerStart) }
     private val btnWebServerStop by lazy { findViewById<MaterialButton>(R.id.btnWebServerStop) }
 
-    private val etSocketServerPort by lazy { findViewById<TextInputEditText>(R.id.etSocketServerPort) }
-    private val btnSocketServerStart by lazy { findViewById<MaterialButton>(R.id.btnSocketServerStart) }
-    private val btnSocketServerStop by lazy { findViewById<MaterialButton>(R.id.btnSocketServerStop) }
+//    private val etSocketServerPort by lazy { findViewById<TextInputEditText>(R.id.etSocketServerPort) }
+//    private val btnSocketServerStart by lazy { findViewById<MaterialButton>(R.id.btnSocketServerStart) }
+//    private val btnSocketServerStop by lazy { findViewById<MaterialButton>(R.id.btnSocketServerStop) }
 
     private val btnDebug by lazy { findViewById<MaterialButton>(R.id.btnDebug) }
     private val btnInfo by lazy { findViewById<MaterialButton>(R.id.btnInfo) }
@@ -66,7 +66,7 @@ internal class WebLogActivity : AppCompatActivity() {
     private fun initView() {
         etIp.setText(WebLogHelper.getIpAddress(this))
         etWebServerPort.setText(WebLogConfig.webServerPort.toString())
-        etSocketServerPort.setText(WebLogConfig.socketServerPort.toString())
+//        etSocketServerPort.setText(WebLogConfig.socketServerPort.toString())
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = messageAdapter
@@ -90,12 +90,12 @@ internal class WebLogActivity : AppCompatActivity() {
         btnWebServerStop.setOnClickListener {
             stopWebServer()
         }
-        btnSocketServerStart.setOnClickListener {
-            startSocketServer()
-        }
-        btnSocketServerStop.setOnClickListener {
-            stopSocketServer()
-        }
+//        btnSocketServerStart.setOnClickListener {
+//            startSocketServer()
+//        }
+//        btnSocketServerStop.setOnClickListener {
+//            stopSocketServer()
+//        }
         btnClear.setOnClickListener {
             clear()
         }
@@ -131,7 +131,7 @@ internal class WebLogActivity : AppCompatActivity() {
 
     private fun startWebServer() {
         val ip = etIp.text?.toString().orEmpty().trim()
-        val port = etSocketServerPort.text?.toString().orEmpty().trim()
+        val port = etWebServerPort.text?.toString().orEmpty().trim()
 
         if (ip.isEmpty() || port.isEmpty()) {
             return
@@ -144,20 +144,20 @@ internal class WebLogActivity : AppCompatActivity() {
         viewModel.stopWebServer()
     }
 
-    private fun startSocketServer() {
-        val ip = etIp.text?.toString().orEmpty().trim()
-        val port = etSocketServerPort.text?.toString().orEmpty().trim()
-
-        if (ip.isEmpty() || port.isEmpty()) {
-            return
-        }
-
-        viewModel.startSocketServer(hostName = ip, port = port.toInt())
-    }
-
-    private fun stopSocketServer() {
-        viewModel.stopSocketServer()
-    }
+//    private fun startSocketServer() {
+//        val ip = etIp.text?.toString().orEmpty().trim()
+//        val port = etSocketServerPort.text?.toString().orEmpty().trim()
+//
+//        if (ip.isEmpty() || port.isEmpty()) {
+//            return
+//        }
+//
+//        viewModel.startSocketServer(hostName = ip, port = port.toInt())
+//    }
+//
+//    private fun stopSocketServer() {
+//        viewModel.stopSocketServer()
+//    }
 
     private fun clear() {
         viewModel.clear()
