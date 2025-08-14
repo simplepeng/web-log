@@ -4,12 +4,12 @@ interface DelegateListener {
 
     fun onOpen()
 
-    fun onClose()
+    fun onClose(reason: String?)
 
     fun onMessage(message: String?)
 
     fun onError(ex: Exception?)
 
-    fun onStart()
+    fun onPong()
 
 }

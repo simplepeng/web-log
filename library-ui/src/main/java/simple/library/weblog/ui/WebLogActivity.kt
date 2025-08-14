@@ -88,8 +88,8 @@ internal class WebLogActivity : AppCompatActivity() {
                 WebLog.v("Server", "服务端连接成功")
             }
 
-            override fun onClose() {
-                viewModel.addMessage("SocketServer关闭")
+            override fun onClose(reason: String?) {
+                viewModel.addMessage("SocketServer关闭 -- $reason")
             }
 
             override fun onMessage(message: String?) {
@@ -100,7 +100,7 @@ internal class WebLogActivity : AppCompatActivity() {
                 viewModel.addMessage("发生异常 -- ${ex?.message}")
             }
 
-            override fun onStart() {
+            override fun onPong() {
                 viewModel.addMessage("SocketServer启动成功")
             }
         })

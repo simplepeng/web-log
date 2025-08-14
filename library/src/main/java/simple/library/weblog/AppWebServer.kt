@@ -15,6 +15,10 @@ internal class AppWebServer(
     private var appWebSocket: AppWebSocket? = null
 
     fun broadcast(message: String) {
+        if (!this.isAlive || appWebSocket?.isOpen == false) {
+            return
+        }
+
         Thread {
             appWebSocket?.send(message)
         }.start()
@@ -32,14 +36,15 @@ internal class AppWebServer(
                     reason: String?,
                     initiatedByRemote: Boolean
                 ) {
-                    socketListeners.forEach { it.onClose() }
+                    socketListeners.forEach { it.onClose(reason) }
                 }
 
                 override fun onMessage(message: WebSocketFrame) {
                     socketListeners.forEach { it.onMessage(message.textPayload) }
                 }
 
-                override fun onPong(pong: WebSocketFrame?) {
+                override fun onPong(pong: WebSocketFrame) {
+                    socketListeners.forEach { it.onPong() }
                 }
 
                 override fun onException(exception: IOException?) {
