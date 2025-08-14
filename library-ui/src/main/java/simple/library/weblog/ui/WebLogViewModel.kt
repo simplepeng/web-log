@@ -16,11 +16,11 @@ internal class WebLogViewModel : ViewModel() {
         hostName: String,
         port: Int
     ) {
-        WebLog.startWebServer(hostName = hostName, port = port)
+        WebLog.startServer(hostName = hostName, port = port)
     }
 
     fun stopWebServer() {
-        WebLog.stopWebServer()
+        WebLog.stopServer()
     }
 
     fun startSocketServer(

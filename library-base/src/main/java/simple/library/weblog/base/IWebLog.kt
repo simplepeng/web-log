@@ -1,28 +1,22 @@
 package simple.library.weblog.base
 
+import android.content.Context
+
 interface IWebLog {
 
     fun addSocketListener(listener: DelegateListener)
 
     fun removeSocketListener(listener: DelegateListener)
 
-    fun startServer()
+    fun startServer(context: Context)
+
+    fun startServer(
+        context: Context,
+        hostName: String,
+        port: Int
+    )
 
     fun stopServer()
-
-    fun startWebServer(
-        hostName: String,
-        port: Int
-    )
-
-    fun stopWebServer()
-
-    fun startSocketServer(
-        hostName: String,
-        port: Int
-    )
-
-    fun stopSocketServer()
 
     fun broadcast(
         tag: String,
