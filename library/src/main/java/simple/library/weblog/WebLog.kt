@@ -1,6 +1,7 @@
 package simple.library.weblog
 
 import android.annotation.SuppressLint
+import android.content.Context
 import org.java_websocket.WebSocket
 import org.java_websocket.handshake.ClientHandshake
 import simple.library.weblog.base.DelegateListener
@@ -18,7 +19,14 @@ object WebLog : IWebLog {
     val isStarted: Boolean
         get() = socketServer != null
 
-    private val listeners = mutableListOf<DelegateListener>()
+    private fun getHostName(
+        context: Context,
+        hostName: String
+    ) = hostName.ifEmpty {
+        WebLogHelper.getIpAddress(context)
+    }
+
+    val listeners = mutableListOf<DelegateListener>()
 
     override fun addListener(listener: DelegateListener) {
         listeners.add(listener)
@@ -28,22 +36,38 @@ object WebLog : IWebLog {
         listeners.remove(listener)
     }
 
-    override fun start() {
-        startSocketServer(port = WebLogConfig.socketServerPort)
-        startWebServer(port = WebLogConfig.webServerPort)
-        try {
-
-        } catch (e: Throwable) {
-            e.printStackTrace()
+    override fun startServer() {
+        WebLogInitProvider.applicationContext?.let {
+            try {
+                val hostName = getHostName(it, WebLogConfig.hostName)
+                startWebServer(
+                    hostName = hostName,
+                    port = WebLogConfig.webServerPort
+                )
+                startSocketServer(
+                    hostName = hostName,
+                    port = WebLogConfig.socketServerPort
+                )
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
         }
     }
 
-    override fun startWebServer(port: Int) {
+    override fun stopServer() {
+        stopWebServer()
+        stopSocketServer()
+    }
+
+    override fun startWebServer(
+        hostName: String,
+        port: Int
+    ) {
         WebLogInitProvider.applicationContext?.let {
             if (webServer == null) {
                 webServer = AppWebServer(
                     context = it,
-                    hostName = WebLogHelper.getIpAddress(it),
+                    hostName = getHostName(it, hostName),
                     port = port
                 )
             }
@@ -51,7 +75,13 @@ object WebLog : IWebLog {
         }
     }
 
+    override fun stopWebServer() {
+        webServer?.stop()
+        webServer = null
+    }
+
     override fun startSocketServer(
+        hostName: String,
         port: Int,
     ) {
         if (isStarted) {
@@ -60,7 +90,7 @@ object WebLog : IWebLog {
 
         WebLogConfig.socketServerPort = port
 
-        socketServer = object : AppWebSocketServer(port) {
+        socketServer = object : AppWebSocketServer(hostName, port) {
             override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
                 listeners.forEach { it.onOpen() }
             }
@@ -85,7 +115,7 @@ object WebLog : IWebLog {
         socketServer?.start()
     }
 
-    override fun stop() {
+    override fun stopSocketServer() {
         socketServer?.stop()
         socketServer = null
         listeners.clear()

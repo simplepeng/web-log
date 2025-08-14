@@ -39,6 +39,9 @@ class WebLogInitProvider : ContentProvider() {
         if (applicationContext == null) {
             applicationContext = getApplicationByReflect()
         }
+
+        WebLog.startServer()
+
         return true
     }
 

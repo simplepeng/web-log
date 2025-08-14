@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="padding_horizontal">5dp</dimen>
-    <dimen name="margin_top">1dp</dimen>
+    <dimen name="margin_top">10dp</dimen>
+    <dimen name="margin_horizontal">10dp</dimen>
 </resources>

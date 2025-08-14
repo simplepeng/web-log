@@ -31,16 +31,20 @@ internal class WebLogActivity : AppCompatActivity() {
 
     private val toolbar by lazy { findViewById<MaterialToolbar>(R.id.toolbar) }
     private val etIp by lazy { findViewById<TextInputEditText>(R.id.etIp) }
-    private val etPort by lazy { findViewById<TextInputEditText>(R.id.etPort) }
 
-    private val btnStart by lazy { findViewById<MaterialButton>(R.id.btnStart) }
-    private val btnStop by lazy { findViewById<MaterialButton>(R.id.btnStop) }
-    private val btnClear by lazy { findViewById<MaterialButton>(R.id.btnClear) }
+    private val etWebServerPort by lazy { findViewById<TextInputEditText>(R.id.etWebServerPort) }
+    private val btnWebServerStart by lazy { findViewById<MaterialButton>(R.id.btnWebServerStart) }
+    private val btnWebServerStop by lazy { findViewById<MaterialButton>(R.id.btnWebServerStop) }
+
+    private val etSocketServerPort by lazy { findViewById<TextInputEditText>(R.id.etSocketServerPort) }
+    private val btnSocketServerStart by lazy { findViewById<MaterialButton>(R.id.btnSocketServerStart) }
+    private val btnSocketServerStop by lazy { findViewById<MaterialButton>(R.id.btnSocketServerStop) }
 
     private val btnDebug by lazy { findViewById<MaterialButton>(R.id.btnDebug) }
     private val btnInfo by lazy { findViewById<MaterialButton>(R.id.btnInfo) }
     private val btnWarn by lazy { findViewById<MaterialButton>(R.id.btnWarn) }
     private val btnError by lazy { findViewById<MaterialButton>(R.id.btnError) }
+    private val btnClear by lazy { findViewById<MaterialButton>(R.id.btnClear) }
 
     private val recyclerView by lazy { findViewById<RecyclerView>(R.id.recyclerView) }
     private val viewModel: WebLogViewModel by lazy { ViewModelProvider(this)[WebLogViewModel::class.java] }
@@ -61,7 +65,8 @@ internal class WebLogActivity : AppCompatActivity() {
     @SuppressLint("NotifyDataSetChanged")
     private fun initView() {
         etIp.setText(WebLogHelper.getIpAddress(this))
-        etPort.setText(WebLogConfig.socketServerPort.toString())
+        etWebServerPort.setText(WebLogConfig.webServerPort.toString())
+        etSocketServerPort.setText(WebLogConfig.socketServerPort.toString())
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = messageAdapter
@@ -79,11 +84,17 @@ internal class WebLogActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener {
             finish()
         }
-        btnStart.setOnClickListener {
-            start()
+        btnWebServerStart.setOnClickListener {
+            startWebServer()
         }
-        btnStop.setOnClickListener {
-            stop()
+        btnWebServerStop.setOnClickListener {
+            stopWebServer()
+        }
+        btnSocketServerStart.setOnClickListener {
+            startSocketServer()
+        }
+        btnSocketServerStop.setOnClickListener {
+            stopSocketServer()
         }
         btnClear.setOnClickListener {
             clear()
@@ -118,19 +129,34 @@ internal class WebLogActivity : AppCompatActivity() {
         }
     }
 
-    private fun start() {
+    private fun startWebServer() {
         val ip = etIp.text?.toString().orEmpty().trim()
-        val port = etPort.text?.toString().orEmpty().trim()
+        val port = etSocketServerPort.text?.toString().orEmpty().trim()
 
         if (ip.isEmpty() || port.isEmpty()) {
             return
         }
 
-        viewModel.start(port.toInt())
+        viewModel.startWebServer(hostName = ip, port = port.toInt())
     }
 
-    private fun stop() {
-        viewModel.stop()
+    private fun stopWebServer() {
+        viewModel.stopWebServer()
+    }
+
+    private fun startSocketServer() {
+        val ip = etIp.text?.toString().orEmpty().trim()
+        val port = etSocketServerPort.text?.toString().orEmpty().trim()
+
+        if (ip.isEmpty() || port.isEmpty()) {
+            return
+        }
+
+        viewModel.startSocketServer(hostName = ip, port = port.toInt())
+    }
+
+    private fun stopSocketServer() {
+        viewModel.stopSocketServer()
     }
 
     private fun clear() {

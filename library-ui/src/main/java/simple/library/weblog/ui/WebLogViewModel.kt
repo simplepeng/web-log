@@ -12,9 +12,21 @@ internal class WebLogViewModel : ViewModel() {
     val addMessageLiveData = MutableLiveData<Int>()
     val clearMessageLiveData = MutableLiveData<Unit>()
 
-//    var defaultPort = 8080
+    fun startWebServer(
+        hostName: String,
+        port: Int
+    ) {
+        WebLog.startWebServer(hostName = hostName, port = port)
+    }
 
-    fun start(port: Int) {
+    fun stopWebServer() {
+        WebLog.stopWebServer()
+    }
+
+    fun startSocketServer(
+        hostName: String,
+        port: Int
+    ) {
         if (WebLog.isStarted) {
             addMessage("服务正在运行中...")
             return
@@ -27,7 +39,7 @@ internal class WebLogViewModel : ViewModel() {
             }
 
             override fun onClose(code: Int, reason: String?, remote: Boolean) {
-                addMessage("WebSocket服务关闭 $reason -- $remote")
+                addMessage("SocketServer关闭 $reason -- $remote")
             }
 
             override fun onMessage(message: String?) {
@@ -39,15 +51,15 @@ internal class WebLogViewModel : ViewModel() {
             }
 
             override fun onStart() {
-                addMessage("WebSocket服务启动成功")
+                addMessage("SocketServer启动成功")
             }
         })
-        WebLog.startSocketServer(port)
+        WebLog.startSocketServer(hostName = hostName, port = port)
     }
 
-    fun stop() {
-        WebLog.stop()
-        addMessage("服务已关闭")
+    fun stopSocketServer() {
+        WebLog.stopSocketServer()
+        addMessage("SocketServe已关闭")
     }
 
     fun clear() {

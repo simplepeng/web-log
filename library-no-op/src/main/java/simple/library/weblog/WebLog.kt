@@ -14,10 +14,10 @@ object WebLog : IWebLog {
     override fun startSocketServer(port: Int) {
     }
 
-    override fun start() {
+    override fun startServer() {
     }
 
-    override fun stop() {
+    override fun stopSocketServer() {
     }
 
     override fun broadcast(tag: String, message: String) {

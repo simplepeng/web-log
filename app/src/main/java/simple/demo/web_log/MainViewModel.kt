@@ -7,10 +7,6 @@ import simple.library.weblog.ui.WebLogPage
 
 class MainViewModel(private val application: Application) : AndroidViewModel(application) {
 
-    init {
-        WebLog.start()
-    }
-
     fun postAction(action: MainAction) {
         when (action) {
             MainAction.OpenComposeUI -> TODO()
