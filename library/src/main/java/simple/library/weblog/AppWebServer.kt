@@ -1,19 +1,23 @@
 package simple.library.weblog
 
 import android.content.Context
-import fi.iki.elonen.NanoHTTPD
+import fi.iki.elonen.NanoWSD
 
 internal class AppWebServer(
     private val context: Context,
     hostName: String,
     port: Int
-) : NanoHTTPD(hostName, port) {
+) : NanoWSD(hostName, port) {
 
-//   init {
-//      start(SOCKET_READ_TIMEOUT, false)
-//   }
+    override fun openWebSocket(handshake: IHTTPSession): WebSocket {
+        return AppWebSocket(handshake)
+    }
 
-    override fun serve(session: IHTTPSession): Response? {
+    override fun serveHttp(session: IHTTPSession): Response? {
+        return serveResponse(session)
+    }
+
+    private fun serveResponse(session: IHTTPSession):Response?{
         var uri = session.uri
 
         if (uri == "/") {

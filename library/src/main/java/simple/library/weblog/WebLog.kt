@@ -44,10 +44,10 @@ object WebLog : IWebLog {
                     hostName = hostName,
                     port = WebLogConfig.webServerPort
                 )
-                startSocketServer(
-                    hostName = hostName,
-                    port = WebLogConfig.socketServerPort
-                )
+//                startSocketServer(
+//                    hostName = hostName,
+//                    port = WebLogConfig.socketServerPort
+//                )
             } catch (e: Throwable) {
                 e.printStackTrace()
             }
