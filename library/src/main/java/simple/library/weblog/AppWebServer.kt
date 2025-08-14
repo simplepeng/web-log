@@ -9,15 +9,26 @@ internal class AppWebServer(
     port: Int
 ) : NanoWSD(hostName, port) {
 
+    private var appWebSocket: AppWebSocket? = null
+
+    fun broadcast(message: String) {
+        Thread {
+            appWebSocket?.send(message)
+        }.start()
+    }
+
     override fun openWebSocket(handshake: IHTTPSession): WebSocket {
-        return AppWebSocket(handshake)
+        if (appWebSocket == null) {
+            appWebSocket = AppWebSocket(handshake)
+        }
+        return appWebSocket!!
     }
 
     override fun serveHttp(session: IHTTPSession): Response? {
         return serveResponse(session)
     }
 
-    private fun serveResponse(session: IHTTPSession):Response?{
+    private fun serveResponse(session: IHTTPSession): Response? {
         var uri = session.uri
 
         if (uri == "/") {
