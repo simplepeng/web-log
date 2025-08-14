@@ -5,10 +5,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.postDelayed
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -63,7 +61,7 @@ internal class WebLogActivity : AppCompatActivity() {
     @SuppressLint("NotifyDataSetChanged")
     private fun initView() {
         etIp.setText(WebLogHelper.getIpAddress(this))
-        etPort.setText(WebLogConfig.port.toString())
+        etPort.setText(WebLogConfig.socketServerPort.toString())
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = messageAdapter

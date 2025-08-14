@@ -1,147 +1,165 @@
 package simple.library.weblog
 
+import android.annotation.SuppressLint
 import org.java_websocket.WebSocket
 import org.java_websocket.handshake.ClientHandshake
 import simple.library.weblog.base.DelegateListener
 import simple.library.weblog.base.IWebLog
+import simple.library.weblog.base.WebLogHelper
 import java.lang.Exception
 
 object WebLog : IWebLog {
 
-   private var server: AndroidWebSocketServer? = null
+    private var socketServer: AppWebSocketServer? = null
 
-   val isStarted: Boolean
-      get() = server != null
+    @SuppressLint("StaticFieldLeak")
+    private var webServer: AppWebServer? = null
 
-   private val listeners = mutableListOf<DelegateListener>()
+    val isStarted: Boolean
+        get() = socketServer != null
 
-   override fun addListener(listener: DelegateListener) {
-      listeners.add(listener)
-   }
+    private val listeners = mutableListOf<DelegateListener>()
 
-   override fun removeListener(listener: DelegateListener) {
-      listeners.remove(listener)
-   }
+    override fun addListener(listener: DelegateListener) {
+        listeners.add(listener)
+    }
 
-   override fun startWithPort(
-      port: Int,
-   ) {
-      if (isStarted) {
-         return
-      }
+    override fun removeListener(listener: DelegateListener) {
+        listeners.remove(listener)
+    }
 
-      WebLogConfig.port = port
+    override fun start() {
+        startSocketServer(port = WebLogConfig.socketServerPort)
+        startWebServer(port = WebLogConfig.webServerPort)
+        try {
 
-      server = object : AndroidWebSocketServer(port) {
-         override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
-            listeners.forEach { it.onOpen() }
-         }
+        } catch (e: Throwable) {
+            e.printStackTrace()
+        }
+    }
 
-         override fun onClose(conn: WebSocket?, code: Int, reason: String?, remote: Boolean) {
-            listeners.forEach { it.onClose(code, reason, remote) }
-         }
+    override fun startWebServer(port: Int) {
+        WebLogInitProvider.applicationContext?.let {
+            if (webServer == null) {
+                webServer = AppWebServer(
+                    context = it,
+                    hostName = WebLogHelper.getIpAddress(it),
+                    port = port
+                )
+            }
+            webServer?.start()
+        }
+    }
 
-         override fun onMessage(conn: WebSocket?, message: String?) {
-            listeners.forEach { it.onMessage(message) }
-         }
+    override fun startSocketServer(
+        port: Int,
+    ) {
+        if (isStarted) {
+            return
+        }
 
-         override fun onError(conn: WebSocket?, ex: Exception?) {
-            listeners.forEach { it.onError(ex) }
-         }
+        WebLogConfig.socketServerPort = port
 
-         override fun onStart() {
-            listeners.forEach { it.onStart() }
-         }
-      }
+        socketServer = object : AppWebSocketServer(port) {
+            override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
+                listeners.forEach { it.onOpen() }
+            }
 
-      server?.start()
-   }
+            override fun onClose(conn: WebSocket?, code: Int, reason: String?, remote: Boolean) {
+                listeners.forEach { it.onClose(code, reason, remote) }
+            }
 
-   override fun start() {
-//      startWithPort(port = WebLogConfig.port)
-      WebLogInitProvider.applicationContext?.let {
-         AppWebServer(
-            context = it,
-            port = WebLogConfig.port
-         )
-      }
-   }
+            override fun onMessage(conn: WebSocket?, message: String?) {
+                listeners.forEach { it.onMessage(message) }
+            }
 
-   override fun stop() {
-      server?.stop()
-      server = null
-      listeners.clear()
-   }
+            override fun onError(conn: WebSocket?, ex: Exception?) {
+                listeners.forEach { it.onError(ex) }
+            }
 
-   override fun broadcast(
-      tag: String,
-      message: String
-   ) {
-      v(tag, message)
-   }
+            override fun onStart() {
+                listeners.forEach { it.onStart() }
+            }
+        }
 
-   override fun v(
-      tag: String,
-      message: String
-   ) {
-      server?.broadcast(
-         Message(
-            level = Message.LEVEL_VERBOSE,
-            tag = tag,
-            message = message
-         ).toJson()
-      )
-   }
+        socketServer?.start()
+    }
 
-   override fun d(
-      tag: String,
-      message: String
-   ) {
-      server?.broadcast(
-         Message(
-            level = Message.LEVEL_DEBUG,
-            tag = tag,
-            message = message
-         ).toJson()
-      )
-   }
+    override fun stop() {
+        socketServer?.stop()
+        socketServer = null
+        listeners.clear()
+    }
 
-   override fun i(
-      tag: String,
-      message: String
-   ) {
-      server?.broadcast(
-         Message(
-            level = Message.LEVEL_INFO,
-            tag = tag,
-            message = message
-         ).toJson()
-      )
-   }
+    override fun broadcast(
+        tag: String,
+        message: String
+    ) {
+        v(tag, message)
+    }
 
-   override fun w(
-      tag: String,
-      message: String
-   ) {
-      server?.broadcast(
-         Message(
-            level = Message.LEVEL_WARN,
-            tag = tag,
-            message = message
-         ).toJson()
-      )
-   }
+    override fun v(
+        tag: String,
+        message: String
+    ) {
+        socketServer?.broadcast(
+            Message(
+                level = Message.LEVEL_VERBOSE,
+                tag = tag,
+                message = message
+            ).toJson()
+        )
+    }
 
-   override fun e(
-      tag: String,
-      message: String
-   ) {
-      server?.broadcast(
-         Message(
-            level = Message.LEVEL_ERROR,
-            tag = tag,
-            message = message
-         ).toJson()
-      )
-   }
+    override fun d(
+        tag: String,
+        message: String
+    ) {
+        socketServer?.broadcast(
+            Message(
+                level = Message.LEVEL_DEBUG,
+                tag = tag,
+                message = message
+            ).toJson()
+        )
+    }
+
+    override fun i(
+        tag: String,
+        message: String
+    ) {
+        socketServer?.broadcast(
+            Message(
+                level = Message.LEVEL_INFO,
+                tag = tag,
+                message = message
+            ).toJson()
+        )
+    }
+
+    override fun w(
+        tag: String,
+        message: String
+    ) {
+        socketServer?.broadcast(
+            Message(
+                level = Message.LEVEL_WARN,
+                tag = tag,
+                message = message
+            ).toJson()
+        )
+    }
+
+    override fun e(
+        tag: String,
+        message: String
+    ) {
+        socketServer?.broadcast(
+            Message(
+                level = Message.LEVEL_ERROR,
+                tag = tag,
+                message = message
+            ).toJson()
+        )
+    }
 }

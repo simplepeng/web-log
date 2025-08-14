@@ -6,7 +6,11 @@ interface IWebLog {
 
     fun removeListener(listener: DelegateListener)
 
-    fun startWithPort(
+    fun startSocketServer(
+        port: Int
+    )
+
+    fun startWebServer(
         port: Int
     )
 

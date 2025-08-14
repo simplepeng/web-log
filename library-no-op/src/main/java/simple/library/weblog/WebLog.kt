@@ -11,7 +11,7 @@ object WebLog : IWebLog {
     override fun removeListener(listener: DelegateListener) {
     }
 
-    override fun startWithPort(port: Int) {
+    override fun startSocketServer(port: Int) {
     }
 
     override fun start() {

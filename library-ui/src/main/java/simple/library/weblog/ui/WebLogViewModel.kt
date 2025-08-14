@@ -42,7 +42,7 @@ internal class WebLogViewModel : ViewModel() {
                 addMessage("WebSocket服务启动成功")
             }
         })
-        WebLog.startWithPort(port)
+        WebLog.startSocketServer(port)
     }
 
     fun stop() {
