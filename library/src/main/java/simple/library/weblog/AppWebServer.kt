@@ -2,11 +2,14 @@ package simple.library.weblog
 
 import android.content.Context
 import fi.iki.elonen.NanoWSD
+import simple.library.weblog.base.DelegateListener
+import java.io.IOException
 
 internal class AppWebServer(
     private val context: Context,
+    private val socketListeners: List<DelegateListener>,
     hostName: String,
-    port: Int
+    port: Int,
 ) : NanoWSD(hostName, port) {
 
     private var appWebSocket: AppWebSocket? = null
@@ -19,7 +22,30 @@ internal class AppWebServer(
 
     override fun openWebSocket(handshake: IHTTPSession): WebSocket {
         if (appWebSocket == null) {
-            appWebSocket = AppWebSocket(handshake)
+            appWebSocket = object : AppWebSocket(handshake) {
+                override fun onOpen() {
+                    socketListeners.forEach { it.onOpen() }
+                }
+
+                override fun onClose(
+                    code: WebSocketFrame.CloseCode?,
+                    reason: String?,
+                    initiatedByRemote: Boolean
+                ) {
+                    socketListeners.forEach { it.onClose() }
+                }
+
+                override fun onMessage(message: WebSocketFrame) {
+                    socketListeners.forEach { it.onMessage(message.textPayload) }
+                }
+
+                override fun onPong(pong: WebSocketFrame?) {
+                }
+
+                override fun onException(exception: IOException?) {
+                    socketListeners.forEach { it.onError(exception) }
+                }
+            }
         }
         return appWebSocket!!
     }

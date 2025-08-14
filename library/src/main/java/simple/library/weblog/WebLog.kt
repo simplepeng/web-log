@@ -45,14 +45,16 @@ object WebLog : IWebLog {
         hostName: String,
         port: Int
     ) {
-        if (webServer == null) {
-            webServer = AppWebServer(
-                context = context,
-                hostName = hostName,
-                port = port
-            )
+        try {
+            if (webServer == null) {
+                webServer = AppWebServer(context, socketListeners, hostName, port)
+            }
+            if (webServer?.wasStarted() == false) {
+                webServer?.start()
+            }
+        } catch (e: Throwable) {
+            e.printStackTrace()
         }
-        webServer?.start()
     }
 
     override fun stopServer() {

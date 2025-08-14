@@ -15,6 +15,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import simple.library.weblog.WebLog
 import simple.library.weblog.WebLogConfig
+import simple.library.weblog.base.DelegateListener
 import simple.library.weblog.base.WebLogHelper
 
 internal class WebLogActivity : AppCompatActivity() {
@@ -81,6 +82,29 @@ internal class WebLogActivity : AppCompatActivity() {
     }
 
     private fun initListener() {
+        WebLog.addSocketListener(object : DelegateListener {
+            override fun onOpen() {
+                viewModel.addMessage("客户端连接成功")
+                WebLog.v("Server", "服务端连接成功")
+            }
+
+            override fun onClose() {
+                viewModel.addMessage("SocketServer关闭")
+            }
+
+            override fun onMessage(message: String?) {
+                viewModel.addMessage("收到消息 -- $message")
+            }
+
+            override fun onError(ex: Exception?) {
+                viewModel.addMessage("发生异常 -- ${ex?.message}")
+            }
+
+            override fun onStart() {
+                viewModel.addMessage("SocketServer启动成功")
+            }
+        })
+
         toolbar.setNavigationOnClickListener {
             finish()
         }
@@ -137,11 +161,11 @@ internal class WebLogActivity : AppCompatActivity() {
             return
         }
 
-        viewModel.startWebServer(hostName = ip, port = port.toInt())
+        WebLog.startServer(this, hostName = ip, port = port.toInt())
     }
 
     private fun stopWebServer() {
-        viewModel.stopWebServer()
+        WebLog.stopServer()
     }
 
 //    private fun startSocketServer() {

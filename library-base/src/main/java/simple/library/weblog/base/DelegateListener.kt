@@ -4,7 +4,7 @@ interface DelegateListener {
 
     fun onOpen()
 
-    fun onClose(code: Int, reason: String?, remote: Boolean)
+    fun onClose()
 
     fun onMessage(message: String?)
 
