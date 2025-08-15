@@ -7,6 +7,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
+import simple.library.weblog.server.KeepRunningService
 
 
 class WebLogInitProvider : ContentProvider() {
@@ -41,7 +42,7 @@ class WebLogInitProvider : ContentProvider() {
         }
 
         applicationContext?.let {
-            WebLog.startServer(it)
+            KeepRunningService.start(it)
         }
 
         return true
