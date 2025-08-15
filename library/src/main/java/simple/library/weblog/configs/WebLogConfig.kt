@@ -20,7 +20,7 @@ object WebLogConfig {
     var hostName: String
         get() = sharedPreferences?.getString(KEY_HOST_NAME, "") ?: ""
         @SuppressLint("UseKtx")
-        set(value) = sharedPreferences?.edit()?.putString(KEY_WEB_SERVER_PORT, value)?.apply() ?: Unit
+        set(value) = sharedPreferences?.edit()?.putString(KEY_HOST_NAME, value)?.apply() ?: Unit
 
     var webServerPort: Int
         get() = sharedPreferences?.getInt(KEY_WEB_SERVER_PORT, DEFAULT_WEB_SERVER_PORT) ?: DEFAULT_WEB_SERVER_PORT
@@ -32,4 +32,6 @@ object WebLogConfig {
 //        @SuppressLint("UseKtx")
 //        set(value) = sharedPreferences?.edit()?.putInt(KEY_SOCKET_SERVER_PORT, value)?.apply() ?: Unit
 
+    val webServerUrl: String
+        get() = "http://${hostName}:${webServerPort}"
 }

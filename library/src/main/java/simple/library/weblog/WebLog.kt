@@ -57,6 +57,8 @@ object WebLog : IWebLog {
             }
             if (webServer?.wasStarted() == false) {
                 webServer?.start()
+                WebLogConfig.hostName = hostName
+                WebLogConfig.webServerPort = port
             }
         } catch (e: Throwable) {
             e.printStackTrace()
