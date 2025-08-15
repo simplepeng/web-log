@@ -87,7 +87,7 @@
                     android:text="stop" />
 
                 <Button
-                    android:id="@+id/btnWebServerOpen"
+                    android:id="@+id/btnOpen"
                     style="@style/WebLogButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
                     android:text="Open" />
 
                 <Button
-                    android:id="@+id/btnWebServerCopy"
+                    android:id="@+id/btnCopy"
                     style="@style/WebLogButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

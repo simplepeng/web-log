@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -40,6 +41,9 @@ internal class WebLogActivity : AppCompatActivity() {
 //    private val etSocketServerPort by lazy { findViewById<TextInputEditText>(R.id.etSocketServerPort) }
 //    private val btnSocketServerStart by lazy { findViewById<MaterialButton>(R.id.btnSocketServerStart) }
 //    private val btnSocketServerStop by lazy { findViewById<MaterialButton>(R.id.btnSocketServerStop) }
+
+    private val btnOpen by lazy { findViewById<View>(R.id.btnOpen) }
+    private val btnCopy by lazy { findViewById<View>(R.id.btnCopy) }
 
     private val btnDebug by lazy { findViewById<MaterialButton>(R.id.btnDebug) }
     private val btnInfo by lazy { findViewById<MaterialButton>(R.id.btnInfo) }
@@ -114,6 +118,12 @@ internal class WebLogActivity : AppCompatActivity() {
         btnWebServerStop.setOnClickListener {
             stopWebServer()
         }
+        btnOpen.setOnClickListener {
+            Helper.open(this, getUrl())
+        }
+        btnCopy.setOnClickListener {
+            Helper.copy(this, getUrl())
+        }
 //        btnSocketServerStart.setOnClickListener {
 //            startSocketServer()
 //        }
@@ -185,5 +195,11 @@ internal class WebLogActivity : AppCompatActivity() {
 
     private fun clear() {
         viewModel.clear()
+    }
+
+    private fun getUrl(): String {
+        val ip = etIp.text?.toString().orEmpty().trim()
+        val port = etWebServerPort.text?.toString().orEmpty().trim()
+        return "http://$ip:$port"
     }
 }
