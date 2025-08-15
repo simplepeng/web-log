@@ -8,6 +8,7 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import simple.library.weblog.server.KeepRunningService
+import simple.library.weblog.utils.Helper
 
 
 class WebLogInitProvider : ContentProvider() {
@@ -43,6 +44,7 @@ class WebLogInitProvider : ContentProvider() {
 
         applicationContext?.let {
             KeepRunningService.start(it)
+            Helper.createShortcuts(it)
         }
 
         return true

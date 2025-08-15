@@ -2,13 +2,16 @@ package simple.library.weblog.utils
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.widget.Toast
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.net.toUri
-
+import simple.library.weblog.ui.WebLogActivity
 
 internal object Helper {
 
@@ -38,14 +41,15 @@ internal object Helper {
         }
     }
 
-    fun getAppIcon(context: Context): Drawable? {
-        try {
-            val packageManager = context.packageManager
-            val applicationInfo = packageManager.getApplicationInfo(context.packageName, 0)
-            return applicationInfo.loadIcon(packageManager)
-        } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
-            return null
-        }
+    fun createShortcuts(context: Context) {
+        val shortcutInfo = ShortcutInfoCompat.Builder(context, "web_log_page")
+            .setShortLabel("Open WebLog Page")
+//            .setActivity(ComponentName(context, WebLogActivity::class.java))
+            .setIntent(Intent(context, WebLogActivity::class.java).apply {
+                setAction(Intent.ACTION_VIEW)
+            })
+            .build()
+
+        ShortcutManagerCompat.addDynamicShortcuts(context, listOf(shortcutInfo))
     }
 }
