@@ -1,4 +1,4 @@
-package simple.library.weblog
+package simple.library.weblog.data
 
 import org.json.JSONObject
 

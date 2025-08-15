@@ -1,12 +1,13 @@
-package simple.library.weblog
+package simple.library.weblog.configs
 
 import android.annotation.SuppressLint
 import android.content.Context
+import simple.library.weblog.WebLogInitProvider
 
 object WebLogConfig {
 
     private val sharedPreferences by lazy {
-        WebLogInitProvider.applicationContext?.getSharedPreferences("config_web_log", Context.MODE_PRIVATE)
+        WebLogInitProvider.Companion.applicationContext?.getSharedPreferences("config_web_log", Context.MODE_PRIVATE)
     }
 
     private const val DEFAULT_WEB_SERVER_PORT = 8080

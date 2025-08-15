@@ -1,4 +1,4 @@
-package simple.library.weblog
+package simple.library.weblog.server
 
 import android.content.Context
 import fi.iki.elonen.NanoWSD

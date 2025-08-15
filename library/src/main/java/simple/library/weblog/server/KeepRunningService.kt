@@ -1,4 +1,4 @@
-package simple.library.weblog.ui
+package simple.library.weblog.server
 
 import android.app.Service
 import android.content.Context

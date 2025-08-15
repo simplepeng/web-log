@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/baseline_arrow_back_24"
+            app:title="WebLog" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:hint="ip">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etIp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="port"
+                    android:minWidth="90dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etWebServerPort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        tools:text="8080" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnWebServerStart"
+                    style="@style/WebLogButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="start" />
+
+                <Button
+                    android:id="@+id/btnWebServerStop"
+                    style="@style/WebLogButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/padding_horizontal"
+                    android:text="stop" />
+
+                <Button
+                    android:id="@+id/btnOpen"
+                    style="@style/WebLogButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/padding_horizontal"
+                    android:text="Open" />
+
+                <Button
+                    android:id="@+id/btnCopy"
+                    style="@style/WebLogButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/padding_horizontal"
+                    android:text="Copy" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!--    <com.google.android.material.card.MaterialCardView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginHorizontal="@dimen/margin_horizontal"-->
+    <!--        android:layout_marginTop="@dimen/margin_top">-->
+
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_margin="@dimen/margin_horizontal"-->
+    <!--            android:orientation="vertical">-->
+
+    <!--            <com.google.android.material.textview.MaterialTextView-->
+    <!--                style="@style/TextAppearance.MaterialComponents.Body1"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="SocketServer" />-->
+
+    <!--            <LinearLayout-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="@dimen/margin_top"-->
+    <!--                android:orientation="horizontal">-->
+
+    <!--                <com.google.android.material.textfield.TextInputLayout-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:hint="port"-->
+    <!--                    android:minWidth="90dp">-->
+
+    <!--                    <com.google.android.material.textfield.TextInputEditText-->
+    <!--                        android:id="@+id/etSocketServerPort"-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:inputType="number"-->
+    <!--                        tools:text="8080" />-->
+    <!--                </com.google.android.material.textfield.TextInputLayout>-->
+
+    <!--                <Button-->
+    <!--                    android:id="@+id/btnSocketServerStart"-->
+    <!--                    style="@style/WebLogButton"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginStart="@dimen/padding_horizontal"-->
+    <!--                    android:text="start" />-->
+
+    <!--                <Button-->
+    <!--                    android:id="@+id/btnSocketServerStop"-->
+    <!--                    style="@style/WebLogButton"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginStart="@dimen/padding_horizontal"-->
+    <!--                    android:text="stop" />-->
+    <!--            </LinearLayout>-->
+    <!--        </LinearLayout>-->
+    <!--    </com.google.android.material.card.MaterialCardView>-->
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_horizontal"
+        android:layout_marginTop="@dimen/margin_top">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btnDebug"
+                    style="@style/WebLogButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="debug" />
+
+                <Button
+                    android:id="@+id/btnInfo"
+                    style="@style/WebLogButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/padding_horizontal"
+                    android:text="info" />
+
+                <Button
+                    android:id="@+id/btnWarn"
+                    style="@style/WebLogButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/padding_horizontal"
+                    android:text="warn" />
+
+                <Button
+                    android:id="@+id/btnError"
+                    style="@style/WebLogButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/padding_horizontal"
+                    android:text="error" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnClear"
+                style="@style/WebLogButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="clear" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="10dp" />
+</LinearLayout>

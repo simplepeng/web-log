@@ -1,4 +1,4 @@
-package simple.library.weblog.ui
+package simple.library.weblog.utils
 
 import android.content.ClipData
 import android.content.ClipboardManager

@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import simple.library.weblog.utils.Helper
+import simple.library.weblog.R
 import simple.library.weblog.WebLog
-import simple.library.weblog.WebLogConfig
+import simple.library.weblog.configs.WebLogConfig
 import simple.library.weblog.base.DelegateListener
 import simple.library.weblog.base.WebLogHelper
 

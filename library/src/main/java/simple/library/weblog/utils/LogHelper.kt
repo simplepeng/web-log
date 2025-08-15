@@ -1,4 +1,4 @@
-package simple.library.weblog
+package simple.library.weblog.utils
 
 import android.util.Log
 
