@@ -4,6 +4,11 @@
     <application>
         <activity
             android:name=".WebLogActivity"
+            android:exported="false"
             android:theme="@style/Theme.Material3.DynamicColors.Light.NoActionBar" />
+        <service
+            android:name=".KeepRunningService"
+            android:exported="false" />
     </application>
+
 </manifest>

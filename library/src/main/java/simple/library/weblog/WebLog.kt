@@ -11,6 +11,9 @@ object WebLog : IWebLog {
     @SuppressLint("StaticFieldLeak")
     private var webServer: AppWebServer? = null
 
+    val isStarted: Boolean
+        get() = webServer?.isAlive == true
+
     private fun getHostName(
         context: Context,
         hostName: String

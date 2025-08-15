@@ -156,11 +156,11 @@ internal class WebLogActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-//        if (WebLog.socketServerIsStarted) {
-//            recyclerView.post {
-//                viewModel.addMessage("服务正在运行中...")
-//            }
-//        }
+        if (WebLog.isStarted) {
+            recyclerView.post {
+                viewModel.addMessage("服务正在运行中...")
+            }
+        }
     }
 
     private fun startWebServer() {
