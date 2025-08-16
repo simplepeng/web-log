@@ -1,6 +1,7 @@
 package simple.library.weblog.server
 
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -15,6 +16,7 @@ import androidx.core.graphics.drawable.IconCompat
 import simple.library.weblog.R
 import simple.library.weblog.WebLog
 import simple.library.weblog.configs.WebLogConfig
+import simple.library.weblog.ui.WebLogActivity
 import simple.library.weblog.utils.Helper
 
 class KeepRunningService : Service() {
@@ -57,7 +59,13 @@ class KeepRunningService : Service() {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("WebLog服务正在运行")
                 .setContentText(WebLogConfig.webServerUrl)
-//                .setContentInfo(WebLogConfig.webServerUrl)
+                .setContentIntent(
+                    PendingIntent.getActivity(
+                        this, 111,
+                        Intent(this, WebLogActivity::class.java),
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+                )
                 .setAutoCancel(false)
                 .setOngoing(true)
                 .build()

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="open_web_log_page">Open WebLog Page</string>
+    <string name="open_web_log_page">WebLog页面</string>
+    <string name="is_copied">已复制到粘贴板</string>
 </resources>
