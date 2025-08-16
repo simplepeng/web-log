@@ -27,7 +27,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_horizontal"
+            android:layout_margin="@dimen/card_padding"
             android:orientation="vertical">
 
             <LinearLayout
@@ -172,7 +172,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_horizontal"
+            android:layout_margin="@dimen/card_padding"
             android:orientation="vertical">
 
             <LinearLayout

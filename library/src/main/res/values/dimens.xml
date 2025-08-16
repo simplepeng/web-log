@@ -3,4 +3,5 @@
     <dimen name="padding_horizontal">5dp</dimen>
     <dimen name="margin_top">10dp</dimen>
     <dimen name="margin_horizontal">10dp</dimen>
+    <dimen name="card_padding">10dp</dimen>
 </resources>
