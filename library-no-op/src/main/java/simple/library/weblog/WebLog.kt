@@ -1,5 +1,6 @@
 package simple.library.weblog
 
+import android.content.Context
 import simple.library.weblog.base.DelegateListener
 import simple.library.weblog.base.IWebLog
 
@@ -11,13 +12,13 @@ object WebLog : IWebLog {
     override fun removeSocketListener(listener: DelegateListener) {
     }
 
-    override fun startSocketServer(port: Int) {
+    override fun startServer(context: Context) {
     }
 
-    override fun startServer() {
+    override fun startServer(context: Context, hostName: String, port: Int) {
     }
 
-    override fun stopSocketServer() {
+    override fun stopServer() {
     }
 
     override fun broadcast(tag: String, message: String) {
