@@ -54,4 +54,15 @@ internal object Helper {
 
         ShortcutManagerCompat.addDynamicShortcuts(context, listOf(shortcutInfo))
     }
+
+    fun readAutoStart(context: Context): Boolean {
+        return try {
+            context.packageManager.getApplicationInfo(
+                context.packageName,
+                PackageManager.GET_META_DATA
+            ).metaData.getBoolean("WebLogAutoStart", true)
+        } catch (_: Throwable) {
+            true
+        }
+    }
 }

@@ -43,7 +43,10 @@ class WebLogInitProvider : ContentProvider() {
         }
 
         applicationContext?.let {
-            KeepRunningService.start(it)
+            val autoStart = Helper.readAutoStart(it)
+            if (autoStart) {
+                KeepRunningService.start(it)
+            }
             Helper.createShortcuts(it)
         }
 
