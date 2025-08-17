@@ -27,7 +27,7 @@
 
 然后自己在合适的位置调用`WebLog.startServer`方法即可，要打开WebLog配置页面调用`WebLogPage.open`方法。
 
-自动启动的Server会开启一个`KeepRunningService`，它是一个前台Service，为了WebLog Server能长时间运行，所以请打开通知权限。
+自启动的Server会开启一个`KeepRunningService`，它是一个前台Service，为了WebLog Server能长时间运行，所以请打开通知权限。
 
 ## 引用
 
