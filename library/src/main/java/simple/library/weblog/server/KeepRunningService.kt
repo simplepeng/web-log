@@ -6,6 +6,7 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Icon
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationChannelCompat
@@ -54,7 +55,8 @@ class KeepRunningService : Service() {
         startForeground(
             NOTIFICATION_ID,
             NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.icon_web_log)
+//                .setLargeIcon(Icon.createWithResource(this,R.mipmap.icon_web_log))
                 .setContentTitle("WebLog服务正在运行")
                 .setContentText(WebLogConfig.webServerUrl)
                 .setContentIntent(

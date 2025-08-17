@@ -13,6 +13,7 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.drawable.IconCompat
 import androidx.core.net.toUri
 import simple.library.weblog.R
 import simple.library.weblog.ui.WebLogActivity
@@ -48,6 +49,7 @@ internal object Helper {
 
     fun createShortcuts(context: Context) {
         val shortcutInfo = ShortcutInfoCompat.Builder(context, "web_log_page")
+            .setIcon(IconCompat.createWithResource(context, R.mipmap.icon_web_log))
             .setShortLabel(context.getString(R.string.open_web_log_page))
             .setIntent(
                 Intent(context, WebLogActivity::class.java).apply {
