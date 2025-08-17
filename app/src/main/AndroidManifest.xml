@@ -13,9 +13,9 @@
         android:theme="@style/Theme.Weblog"
         tools:targetApi="31">
 
-        <meta-data
-            android:name="WebLogAutoStart"
-            android:value="true" />
+<!--        <meta-data-->
+<!--            android:name="WebLogAutoStart"-->
+<!--            android:value="false" />-->
 
         <activity
             android:name=".MainActivity"
