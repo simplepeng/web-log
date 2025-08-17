@@ -2,6 +2,7 @@ package simple.library.weblog
 
 import android.annotation.SuppressLint
 import android.content.Context
+import fi.iki.elonen.NanoHTTPD
 import simple.library.weblog.base.DelegateListener
 import simple.library.weblog.base.IWebLog
 import simple.library.weblog.base.WebLogHelper
@@ -56,7 +57,7 @@ object WebLog : IWebLog {
                 webServer = AppWebServer(context, socketListeners, hostName, port)
             }
             if (webServer?.wasStarted() == false) {
-                webServer?.start()
+                webServer?.start(NanoHTTPD.SOCKET_READ_TIMEOUT, false)
                 WebLogConfig.hostName = hostName
                 WebLogConfig.webServerPort = port
             }

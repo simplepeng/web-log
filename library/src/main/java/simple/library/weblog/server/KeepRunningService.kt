@@ -42,8 +42,6 @@ class KeepRunningService : Service() {
     }
 
     private fun start() {
-        WebLog.startServer(context = this)
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannelCompat.Builder(NOTIFICATION_CHANNEL_ID, NotificationManager.IMPORTANCE_NONE)
                 .setName("WebLog")
@@ -70,5 +68,7 @@ class KeepRunningService : Service() {
                 .setOngoing(true)
                 .build()
         )
+
+        WebLog.startServer(context = this)
     }
 }
