@@ -91,7 +91,6 @@ internal class WebLogActivity : AppCompatActivity() {
         WebLog.addSocketListener(object : DelegateListener {
             override fun onOpen() {
                 viewModel.addMessage("客户端连接成功")
-                WebLog.v("Server", "服务端响应成功")
             }
 
             override fun onClose(reason: String?) {

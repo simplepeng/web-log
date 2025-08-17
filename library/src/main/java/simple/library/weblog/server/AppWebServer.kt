@@ -2,6 +2,7 @@ package simple.library.weblog.server
 
 import android.content.Context
 import fi.iki.elonen.NanoWSD
+import simple.library.weblog.WebLog
 import simple.library.weblog.base.DelegateListener
 import java.io.IOException
 
@@ -14,8 +15,14 @@ internal class AppWebServer(
 
     private var appWebSocket: AppWebSocket? = null
 
+    private val unSendMessages = mutableListOf<String>()
+
+    private val canSend: Boolean
+        get() = this.isAlive && appWebSocket?.isOpen == true
+
     fun broadcast(message: String) {
-        if (!this.isAlive || appWebSocket?.isOpen == false) {
+        if (canSend.not()) {
+            unSendMessages.add(message)
             return
         }
 
@@ -24,11 +31,23 @@ internal class AppWebServer(
         }.start()
     }
 
+    private fun resendUnSendMessages() {
+        if (canSend.not()) return
+
+        Thread {
+            unSendMessages.forEach { message ->
+                appWebSocket?.send(message)
+            }
+        }.start()
+    }
+
     override fun openWebSocket(handshake: IHTTPSession): WebSocket {
         if (appWebSocket == null) {
             appWebSocket = object : AppWebSocket(handshake) {
                 override fun onOpen() {
                     socketListeners.forEach { it.onOpen() }
+                    WebLog.v("Server", "服务端响应成功")
+                    resendUnSendMessages()
                 }
 
                 override fun onClose(
