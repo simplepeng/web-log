@@ -158,9 +158,15 @@ internal class WebLogActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        if (WebLog.isStarted) {
-            recyclerView.post {
-                viewModel.addMessage("服务正在运行中...")
+        checkStarted()
+    }
+
+    private fun checkStarted() {
+        recyclerView.post {
+            if (WebLog.isStarted) {
+                viewModel.addMessage("Server is Running")
+            }else{
+                viewModel.addMessage("Server is Done")
             }
         }
     }
@@ -174,10 +180,12 @@ internal class WebLogActivity : AppCompatActivity() {
         }
 
         WebLog.startServer(this, hostName = ip, port = port.toInt())
+        checkStarted()
     }
 
     private fun stopWebServer() {
         WebLog.stopServer()
+        checkStarted()
     }
 
 //    private fun startSocketServer() {

@@ -36,7 +36,8 @@ internal object Helper {
         try {
             val manager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             manager.setPrimaryClip(ClipData.newPlainText(null, url))
-            Toast.makeText(context, context.getString(R.string.is_copied), Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, context.getString(R.string.is_copied), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, url, Toast.LENGTH_SHORT).show()
         } catch (e: Throwable) {
             e.printStackTrace()
         }
