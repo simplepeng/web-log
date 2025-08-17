@@ -57,7 +57,7 @@ object WebLog : IWebLog {
                 webServer = AppWebServer(context, socketListeners, hostName, port)
             }
             if (webServer?.wasStarted() == false) {
-                webServer?.start(NanoHTTPD.SOCKET_READ_TIMEOUT, false)
+                webServer?.start(0, false)
                 WebLogConfig.hostName = hostName
                 WebLogConfig.webServerPort = port
             }
