@@ -1,13 +1,18 @@
 package simple.library.weblog.ui
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +29,8 @@ import simple.library.weblog.base.WebLogHelper
 internal class WebLogActivity : AppCompatActivity() {
 
     companion object {
+        private const val REQ_NOTIFICATION_PERMISSION_CODE = 120
+
         fun start(context: Context) {
             val starter = Intent(context, WebLogActivity::class.java)
             if (context !is Activity) {
@@ -52,6 +59,7 @@ internal class WebLogActivity : AppCompatActivity() {
     private val btnWarn by lazy { findViewById<MaterialButton>(R.id.btnWarn) }
     private val btnError by lazy { findViewById<MaterialButton>(R.id.btnError) }
     private val btnClear by lazy { findViewById<MaterialButton>(R.id.btnClear) }
+    private val btnPermission by lazy { findViewById<MaterialButton>(R.id.btnPermission) }
 
     private val recyclerView by lazy { findViewById<RecyclerView>(R.id.recyclerView) }
     private val viewModel: WebLogViewModel by lazy { ViewModelProvider(this)[WebLogViewModel::class.java] }
@@ -134,6 +142,9 @@ internal class WebLogActivity : AppCompatActivity() {
         btnClear.setOnClickListener {
             clear()
         }
+        btnPermission.setOnClickListener {
+            Helper.openNotificationSetting(this)
+        }
         btnDebug.setOnClickListener {
             val message = "发送了一条debug日志"
             WebLog.d(tag, message)
@@ -164,7 +175,7 @@ internal class WebLogActivity : AppCompatActivity() {
         recyclerView.post {
             if (WebLog.isStarted) {
                 viewModel.addMessage("Server is Running")
-            }else{
+            } else {
                 viewModel.addMessage("Server is Done")
             }
         }
@@ -210,5 +221,26 @@ internal class WebLogActivity : AppCompatActivity() {
         val ip = etIp.text?.toString().orEmpty().trim()
         val port = etWebServerPort.text?.toString().orEmpty().trim()
         return "http://$ip:$port"
+    }
+
+    private fun requestNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13+
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_DENIED
+            ) {
+//                ActivityCompat.shouldShowRequestPermissionRationale()
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    REQ_NOTIFICATION_PERMISSION_CODE
+                )
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String?>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 }

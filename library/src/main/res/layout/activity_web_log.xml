@@ -209,15 +209,27 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/padding_horizontal"
                     android:text="error" />
-
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btnClear"
-                style="@style/WebLogButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="clear" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btnClear"
+                    style="@style/WebLogButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="clear" />
+
+                <Button
+                    android:id="@+id/btnPermission"
+                    style="@style/WebLogButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="permission" />
+            </LinearLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </com.google.android.material.card.MaterialCardView>
 
