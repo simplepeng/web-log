@@ -1,5 +1,6 @@
 package simple.library.weblog.server
 
+import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
@@ -36,16 +37,17 @@ class KeepRunningService : Service() {
         return null
     }
 
-    override fun onCreate() {
-        super.onCreate()
-
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         start()
+        return START_STICKY
     }
 
     private fun start() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannelCompat.Builder(NOTIFICATION_CHANNEL_ID, NotificationManager.IMPORTANCE_NONE)
-                .setName("WebLog")
+            NotificationChannelCompat.Builder(
+                NOTIFICATION_CHANNEL_ID,
+                NotificationManager.IMPORTANCE_HIGH
+            ).setName("WebLog")
                 .build()
                 .let {
                     NotificationManagerCompat.from(this).createNotificationChannel(it)
@@ -56,7 +58,6 @@ class KeepRunningService : Service() {
             NOTIFICATION_ID,
             NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.mipmap.icon_web_log)
-//                .setLargeIcon(Icon.createWithResource(this,R.mipmap.icon_web_log))
                 .setContentTitle("WebLog服务正在运行")
                 .setContentText(WebLogConfig.webServerUrl)
                 .setContentIntent(
@@ -68,6 +69,7 @@ class KeepRunningService : Service() {
                 )
                 .setAutoCancel(false)
                 .setOngoing(true)
+                .setCategory(Notification.CATEGORY_SERVICE)
                 .build()
         )
 
