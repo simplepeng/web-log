@@ -55,4 +55,5 @@ WebLog Web页面是我使用[compose-multiplatform](https://github.com/JetBrains
 
 ## 版本记录
 
+* v0.1.1：修复bug。
 * v0.1.0：第一个版本。
