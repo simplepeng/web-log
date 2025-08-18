@@ -38,6 +38,7 @@ internal class AppWebServer(
             unSendMessages.forEach { message ->
                 appWebSocket?.send(message)
             }
+            unSendMessages.clear()
         }.start()
     }
 
