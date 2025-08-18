@@ -14,7 +14,15 @@ debugImplementation("com.github.simplepeng.web-log:library:0.1.0")
 releaseImplementation("com.github.simplepeng.web-log:library-no-op:0.1.0")
 ```
 
-就这样，然后启动App后，就会自动开启WebServer和SocketServer。
+就这样，然后启动App后，就会自动开启WebServer和SocketServer。然后在需要打Log的地方调用相应的方法：
+
+```kotlin
+WebLog.v("TAG", "message")
+WebLog.d("TAG", "message")
+WebLog.i("TAG", "message")
+WebLog.w("TAG", "message")
+WebLog.e("TAG", "message")
+```
 
 ## 其他配置
 
