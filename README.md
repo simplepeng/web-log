@@ -10,8 +10,8 @@
 ## 导入依赖
 
 ```groovy
-debugImplementation("com.github.simplepeng.web-log:library:0.1.0")
-releaseImplementation("com.github.simplepeng.web-log:library-no-op:0.1.0")
+debugImplementation("com.github.simplepeng.web-log:library:0.1.1")
+releaseImplementation("com.github.simplepeng.web-log:library-no-op:0.1.1")
 ```
 
 就这样，然后启动App后，就会自动开启WebServer和SocketServer。然后在需要打Log的地方调用相应的方法：
