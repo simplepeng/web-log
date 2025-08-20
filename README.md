@@ -10,6 +10,10 @@
 ## 导入依赖
 
 ```groovy
+maven { url 'https://jitpack.io' }
+```
+
+```groovy
 debugImplementation("com.github.simplepeng.web-log:library:0.1.2")
 releaseImplementation("com.github.simplepeng.web-log:library-no-op:0.1.2")
 ```
