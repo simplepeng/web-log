@@ -39,7 +39,7 @@ object WebLog : IWebLog {
         try {
             startServer(
                 context,
-                hostName = getHostName(context, hostName = WebLogConfig.hostName),
+                hostName = WebLogHelper.getIpAddress(context),
                 port = WebLogConfig.webServerPort
             )
         } catch (e: Throwable) {
@@ -58,8 +58,8 @@ object WebLog : IWebLog {
             }
             if (webServer?.wasStarted() == false) {
                 webServer?.start(0, false)
-                WebLogConfig.hostName = hostName
-                WebLogConfig.webServerPort = port
+//                WebLogConfig.hostName = hostName
+//                WebLogConfig.webServerPort = port
             }
         } catch (e: Throwable) {
             e.printStackTrace()

@@ -189,7 +189,9 @@ internal class WebLogActivity : AppCompatActivity() {
             return
         }
 
-        WebLog.startServer(this, hostName = ip, port = port.toInt())
+        val portInt = port.toInt()
+        WebLogConfig.webServerPort = portInt
+        WebLog.startServer(this, hostName = ip, port = portInt)
         checkStarted()
     }
 
